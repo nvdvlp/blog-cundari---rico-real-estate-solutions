@@ -2,6 +2,7 @@
 export default function Blog(){
     return(
         <section id="posts">
+            <input type="text" />
             <h2>There are the latest posts</h2>
             <article>
                 <h2>Fecha</h2>
