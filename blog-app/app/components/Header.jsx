@@ -7,8 +7,7 @@ export default function Header(){
     return(
         <header>
             <div>
-                <h2>Cundari & Rico Real</h2>
-                <h2>Estate Solutions</h2>        
+                <h2>Cundari & Rico Real Estate Solutions</h2>    
                 <h2>
                     Whether you're looking to purchase your dream home or sell your current property,
                     we can help you navigate the process smoothly.

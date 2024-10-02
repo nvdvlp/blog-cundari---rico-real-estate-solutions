@@ -1,13 +1,34 @@
 // blog
-export default function Blog(){
+import Link from "next/link"
+
+async function loadPostUrl(){
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts")
+    const data = await res.json()
+    console.log(data)
+    return data
+}
+
+export default async function Blog(){
+
+    const posts = await loadPostUrl()
+    console.log(posts);
+    
     return(
         <section id="posts">
-            <input type="text" />
+            <button>
+                <Link href='/blog/CreatePost'>Create a Post</Link>
+            </button>
             <h2>There are the latest posts</h2>
             <article>
-                <h2>Fecha</h2>
-                <p>Titulo del post</p>
-                <p>Resumen del post</p>
+                {
+                    posts.map(post => (
+                        <div>
+                            <p>{post.id}</p>
+                            <h2>{post.title}</h2>
+                            <p>{post.body}</p>
+                        </div>
+                    ))
+                }
             </article>
         </section>
     )
