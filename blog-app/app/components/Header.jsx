@@ -14,6 +14,7 @@ export default function Header(){
                 </h2>
             </div>
             <nav>
+                <h2>nav menu</h2>
                 <ul>
                     <li>
                         <Link href="/">
@@ -36,7 +37,6 @@ export default function Header(){
                         </Link>
                     </li>
                 </ul>
-                <h2>nav menu</h2>
             </nav>
         </header>
     )
