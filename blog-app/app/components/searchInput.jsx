@@ -6,8 +6,6 @@ function SearchInput({onSearch, posts}){
     
     const handleInputChange = (e) =>{
         setInputValue(e.target.value)
-        setInputValue(value)
-        onSearch(value)
     }
 
     const handleButtonClick = () => {

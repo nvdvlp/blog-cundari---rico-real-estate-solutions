@@ -3,6 +3,7 @@ import './global.css'
 import { Roboto } from 'next/font/google'
 //import components all components in layout
 import Header from './components/Header'
+import { PostProvider } from './context/context.jsx'; 
 
 export const metadata = {
   title: 'Cundari & Rico Real Estate Solutions',
@@ -28,9 +29,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
+      <PostProvider>
         <Header />
-
           {children}
+
+        </PostProvider>
       </body>
     </html>
   )
