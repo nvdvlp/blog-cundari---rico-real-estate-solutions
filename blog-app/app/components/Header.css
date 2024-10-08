@@ -1,0 +1,56 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height:96px;
+    border-bottom: 1px solid #B7B7B7;
+}
+
+
+.brandContainer{
+    padding-left: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    width:50px;
+    height:50px;
+    padding-right: 15px;
+}
+
+.nameLogo {
+    display: flex;
+    flex-direction: column;
+}
+
+.cudariRico {
+    font-size: 12px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.realState {
+    font-size: 12px;
+    font-weight: 300;
+    color: #5C5C5C;
+}
+
+
+ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    padding: 0; 
+    margin: 0;
+    padding-right: 66px;
+}
+
+a {
+    margin-top: ;
+    text-decoration: none;
+    color: #000000;
+    padding-left:54px;
+}

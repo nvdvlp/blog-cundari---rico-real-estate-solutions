@@ -1,6 +1,6 @@
 import './global.css'
 //import fonts
-import { Roboto } from 'next/font/google'
+import { Inter } from 'next/font/google'
 //import components all components in layout
 import Header from './components/Header'
 import { PostProvider } from './context/context.jsx'; 
@@ -18,8 +18,8 @@ export const metadata = {
 
 }
 
-//font roboto object
-const roboto = Roboto({
+//font Inter object
+const inter = Inter({
   weight:["300", "400", "500", "700"],
   styles:["italic", "normal"],
   subsets:["latin"],
@@ -28,7 +28,7 @@ const roboto = Roboto({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body className={inter.className}>
       <PostProvider>
         <Header />
           {children}
