@@ -1,10 +1,12 @@
-// home and header page
-
+'use client'; 
 //link for connect the routes
+import { usePathname } from 'next/navigation'; 
 import Link from 'next/link';
 import './Header.css'
 
 export default function Header(){
+    const pathname = usePathname(); 
+
     return(
         <header>
             <div class='brandContainer'>
@@ -13,24 +15,20 @@ export default function Header(){
                     <h2 class='cudariRico'>Cundari & Rico</h2>
                     <h2 class='realState'>Real Estate Solutions</h2>    
                 </div>
-                {/* <h2>
-                    Whether you're looking to purchase your dream home or sell your current property,
-                    we can help you navigate the process smoothly.
-                </h2> */}
             </div>
             <nav>
                 <ul>
-                    <li>
-                        <Link href="../CreatePost">
+                    <li className={pathname === '/postPage' ? 'active' : ''}>
+                        <Link href="/postPage">
                             BLOG
                         </Link>
                     </li>
-                    <li>
+                    <li className={pathname === '/about' ? 'active' : ''}>
                         <Link href="/about">
                             SERVICES
                         </Link>
                     </li>
-                    <li>
+                    <li className={pathname === '/contact' ? 'active' : ''}>
                         <Link href="/contact">
                             PROPERTIES
                         </Link>

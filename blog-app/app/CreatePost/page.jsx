@@ -143,7 +143,7 @@ export default function CreatePost() {
                 {draggedImage ? (
                             <img src={draggedImage} alt="Uploaded"/>
                         ) : (
-                            <p class='dropText'>Drop your Post Image</p>
+                            <p class='dropText'>Drop an image or select a file</p>
                         )}
                 </div> 
 
