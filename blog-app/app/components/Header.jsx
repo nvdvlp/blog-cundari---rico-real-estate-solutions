@@ -8,7 +8,7 @@ export default function Header(){
     return(
         <header>
             <div class='brandContainer'>
-                <img class='logo' src="../public/images/logo.jpg" alt="" />
+                <img class='logo' src="../public/logo.jpg" alt="" />
                 <div class='nameLogo'>
                     <h2 class='cudariRico'>Cundari & Rico</h2>
                     <h2 class='realState'>Real Estate Solutions</h2>    

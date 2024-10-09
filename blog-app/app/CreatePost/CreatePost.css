@@ -58,7 +58,15 @@ input {
 }
 
 .size2 {
-    height:220px;
+    border-radius:8px;
+    background-color: #F7F7F7;
+    border: 1px solid #ADADAD;
+    width:630px;
+    height: 220px;
+    width: 100%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    resize: none;
 }
 
 .quill  {
@@ -88,6 +96,23 @@ button {
     background-color: #fff;
     color:#636363;
     border-style: none;
+    font-size:19px;
+    font-weight: 600;
+}
+
+.drag-and-drop-zone {
+    width: 640px;
+    height: 360px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+.dropText {
+    color:#212121;
     font-size:19px;
     font-weight: 600;
 }

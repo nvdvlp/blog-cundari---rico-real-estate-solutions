@@ -34,7 +34,6 @@ const formats = [
     'image'
 ];
 
-
 //agregar post
 export default function CreatePost() {
     const [title, setTitle] = useState('');
@@ -45,17 +44,35 @@ export default function CreatePost() {
     const router = useRouter(); 
 
     const handleSavePost = () => {
-        if (title.trim() && content.trim()) {
-        // Guardar titulo, contenido, descripcion y imagen
-        addPost({ title, description, content, image: draggedImage });
+        if (!title.trim()) {
+            alert('The title post cannot be empty.');
+            return;
+        }
+
+        if (!content.trim()) {
+            alert('The post content cannot be empty.');
+            return;
+        }
+
+        // guardar el post si los campos están llenos
+        const newPost = {
+            title,
+            description,
+            content,
+            image: draggedImage
+        };
+        
+        addPost(newPost);
+        console.log(newPost);
+
+        // limpa los campos
         setTitle('');
         setDescription('');
         setContent('');
         setDraggedImage(null);
+
+        // path blog
         router.push('/blog');
-        } else {
-        alert('El post está vacío.');
-        }
     };
 
     const handleDragImage = (e) =>{
@@ -63,19 +80,36 @@ export default function CreatePost() {
     }
 
     const handleDropImage = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const file = e.dataTransfer.files[0];
-        if(file && file.type.startsWith('image/')){
+        if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = (event) => {
-                //almacena la imagen como base 64
-                setDraggedImage(event.target.result)
+                const img = new Image();
+                img.src = event.target.result;
+                console.log(img.src);
+                img.onload = () => {
+                    console.log("img loaded");
+                    const minWidth = 640; 
+                    const minHeight = 360; 
+
+                    console.log("image dimensions:", img.width, img.height);
+                    if (img.width < minWidth || img.height < minHeight) {
+                        alert(`The image must be at least ${minWidth}px wide and ${minHeight}px tall.`);
+                    } else {
+                        // Si la imagen cumple con las dimensiones, se establece en el estado
+                        setDraggedImage(event.target.result);
+                        console.log("Imagen válida, actualizada en el estado.");
+                    }
+                };
             };
+            // archivo cargado y guardado en base64
             reader.readAsDataURL(file);
-        }else{
-            alert('Drop an image please')
+        } else {
+            alert('Please drag a valid image.');
+            console.error('please upload a valid image file');
         }
-    }
+    };
 
     // const handleDownloadHTML = () => {
     //     const html = new Blob([content], { type: 'text/html' });
@@ -109,7 +143,7 @@ export default function CreatePost() {
                 {draggedImage ? (
                             <img src={draggedImage} alt="Uploaded"/>
                         ) : (
-                            <p>Drop your Post Image</p>
+                            <p class='dropText'>Drop your Post Image</p>
                         )}
                 </div> 
 
@@ -122,12 +156,11 @@ export default function CreatePost() {
                     onChange={(e) => setTitle(e.target.value)}
                     />
                     <h2 class='textInputPost'>Description (optional)</h2>
-                    <input
-                    type="text"
+                    <textarea
                     class='size2'
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    />
+                    onChange={(e) => setDescription(e.target.value)}>
+                    </textarea>
                 </div>
             </div>
             
