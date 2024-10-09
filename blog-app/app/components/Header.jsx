@@ -21,7 +21,7 @@ export default function Header(){
             <nav>
                 <ul>
                     <li>
-                        <Link href="/blog">
+                        <Link href="../CreatePost">
                             BLOG
                         </Link>
                     </li>

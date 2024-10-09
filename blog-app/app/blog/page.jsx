@@ -1,65 +1,30 @@
-// blog
 'use client';
 import Link from "next/link"
-import SearchInput from "../components/searchInput";
 import { usePostContext } from '../context/context';
-
-// Api json placeholder to add post
-// async function loadPostUrl(){
-//     const res = await fetch("https://jsonplaceholder.typicode.com/posts")
-//     const data = await res.json()
-//     console.log(data)
-//     return data
-// }
+import './preview.css'
 
 export default async function Blog(){
     const { posts } = usePostContext();
 
-    return (
-        <div>
-        <h2>Posts</h2>
-            <button>
-                <Link href='/blog/CreatePost'>Create a Post</Link>
-                </button>
+    return (      
+        <div class='preview'>
+        <h2 class='mainPostCreationTitle'>Post Created Successfully!</h2>
         {posts.length > 0 ? (
             posts.map((post, index) => (
-            <div key={index} style={{ marginBottom: '20px' }}>
-                <h4>Post {index + 1}</h4>
-                <div dangerouslySetInnerHTML={{ __html: post }} />
+            <div key={index} class='post'>
+                {post.image && <img src={post.image} alt="Post Image" style={{ maxWidth: '100%' }} />}
+                <div class='columnPostPreview'>
+                    <h2 class='title'>{post.title}</h2>
+                    <h3 class='description'>{post.description}</h3>
+                </div>
+                <Link href={`/blog/${index}`}>
+                    <button>Ver Post Completo</button>
+                </Link>
             </div>
-            ))
-        ) : (
-            <p>No hay posts guardados.</p>
-        )}
+                ))
+                ) : (
+                    <p class='noPost'>There are any post saved</p>
+                )}
         </div>
     );   
-    // const posts = await loadPostUrl()
-    // console.log(posts);
-    //         <button>
-    //             <Link href='/blog/CreatePost'>Create a Post</Link>
-    //         </button>
-    
-    // return(
-    //     <section id="posts">
-
-    //         <SearchInput />
-
-    //         <h2>There are the latest posts</h2>
-    //         <article>
-    //             {
-    //                 posts.map(post => (
-    //                     <div>
-    //                         <h2>
-    //                             <Link href={`/blog/${post.id}`}>
-    //                                 {post.id}. {post.title}
-    //                             </Link>
-    //                                 <p>{post.body}</p>
-    //                         </h2>
-    //                     </div>
-    //                 ))
-    //             }
-    //         </article>
-    //     </section>
-    // )
-
 }   
