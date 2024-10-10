@@ -16,9 +16,14 @@ section {
     margin-bottom:42px;
 }
 
-.drag-and-drop-zone { 
-    width:640px;
-    height:360px;
+.createPostTilte{
+    font-family: "Playfair Display";
+    font-size:45px;
+    font-weight: 600;
+    color:#000000;
+    margin-bottom:49px;
+    text-align: start;
+    width: 1316px;
 }
 
 .inputContainer {
@@ -93,16 +98,23 @@ button {
 .drag-and-drop-zone {
     width: 640px;
     height: 360px;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
+    border: 2px solid #939393;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden; 
+    background-color: #CCCCCC;
 }
 
 .dropText {
-    color:#212121;
+    color:#636363;
     font-size:19px;
     font-weight: 600;
+}
+
+.imageIcon{
+    width: 86px;
+    width: 86px;
+    color: #636363;
 }

@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { usePostContext } from '../../context/context.jsx'; 
 import { useRouter } from 'next/navigation'; 
 import '../../css/CreatePost.css'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const modules = {
@@ -132,18 +133,18 @@ export default function CreatePost() {
 
     return (
         <section>
-            <h2 class='mainBlogTitle'>Create Post</h2>
+            <h2 class='createPostTilte'>Create Post</h2>
             <div class='rowPost'>
 
                 <div
-                className='drag-and-drop-zone'
+                class='drag-and-drop-zone'
                 onDragOver={handleDragImage}
                 onDrop={handleDropImage}
                 >
                 {draggedImage ? (
                             <img src={draggedImage} alt="Uploaded"/>
                         ) : (
-                            <p class='dropText'>Drop an image or select a file</p>
+                            <><FontAwesomeIcon icon={faImage} size="2x" class="imageIcon" /><p class='dropText'>Drop an image or select a file</p></>
                         )}
                 </div> 
 

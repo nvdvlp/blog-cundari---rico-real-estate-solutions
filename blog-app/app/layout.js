@@ -4,6 +4,9 @@ import { Inter } from 'next/font/google'
 //import components all components in layout
 import Header from './components/Header'
 import { PostProvider } from './context/context.jsx'; 
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false; // Evita la inyección automática de CSS
 
 export const metadata = {
   title: 'Cundari & Rico Real Estate Solutions',
