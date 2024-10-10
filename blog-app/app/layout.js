@@ -1,4 +1,4 @@
-import './global.css'
+import './css/global.css'
 //import fonts
 import { Inter } from 'next/font/google'
 //import components all components in layout

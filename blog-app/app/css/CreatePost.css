@@ -16,16 +16,6 @@ section {
     margin-bottom:42px;
 }
 
-.createPost {
-    font-family: "Playfair Display";
-    font-size:45px;
-    font-weight: 600;
-    color:#000000;
-    margin-bottom:38px;
-    width: 1316px;
-    text-align: start;
-}
-
 .drag-and-drop-zone { 
     width:640px;
     height:360px;

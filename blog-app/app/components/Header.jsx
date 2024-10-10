@@ -2,7 +2,7 @@
 //link for connect the routes
 import { usePathname } from 'next/navigation'; 
 import Link from 'next/link';
-import './Header.css'
+import '../css/Header.css'
 
 export default function Header(){
     const pathname = usePathname(); 
@@ -18,18 +18,18 @@ export default function Header(){
             </div>
             <nav>
                 <ul>
-                    <li className={pathname === '/postPage' ? 'active' : ''}>
-                        <Link href="/postPage">
+                    <li className={pathname === '/viewPost' ? 'active' : ''}>
+                        <Link href="/viewPost">
                             BLOG
                         </Link>
                     </li>
-                    <li className={pathname === '/about' ? 'active' : ''}>
-                        <Link href="/about">
+                    <li className={pathname === '/services' ? 'active' : ''}>
+                        <Link href="/services">
                             SERVICES
                         </Link>
                     </li>
-                    <li className={pathname === '/contact' ? 'active' : ''}>
-                        <Link href="/contact">
+                    <li className={pathname === '/properties' ? 'active' : ''}>
+                        <Link href="/properties">
                             PROPERTIES
                         </Link>
                     </li>

@@ -2,9 +2,9 @@
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { usePostContext } from '../context/context.jsx'; 
+import { usePostContext } from '../../context/context.jsx'; 
 import { useRouter } from 'next/navigation'; 
-import './CreatePost.css'
+import '../../css/CreatePost.css'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -132,7 +132,7 @@ export default function CreatePost() {
 
     return (
         <section>
-            <h2 class='createPost'>Create Post</h2>
+            <h2 class='mainBlogTitle'>Create Post</h2>
             <div class='rowPost'>
 
                 <div

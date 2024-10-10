@@ -1,5 +1,5 @@
 'use client';
-import { usePostContext } from '../../context/context';
+import { usePostContext } from '../../../../context/context';
 
 export default function PostPage({ params }){
     const { posts } = usePostContext()

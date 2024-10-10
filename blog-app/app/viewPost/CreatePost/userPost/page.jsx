@@ -1,14 +1,14 @@
 'use client';
 import Link from "next/link"
-import { usePostContext } from '../context/context';
-import './preview.css'
+import { usePostContext } from '../../../context/context';
+import '../css/preview.css'
 
-export default async function Blog(){
+export default async function UserPost(){
     const { posts } = usePostContext();
 
     return (      
         <div class='preview'>
-        <h2 class='mainPostCreationTitle'>Post Created Successfully!</h2>
+        <h2 class='mainBlogTitle'>Post Created Successfully!</h2>
         {posts.length > 0 ? (
             posts.map((post, index) => (
             <div key={index} class='post'>
@@ -23,8 +23,10 @@ export default async function Blog(){
             </div>
                 ))
                 ) : (
-                    <p class='noPost'>There are any post saved</p>
+                    <p class='nonePost'>There are any post saved</p>
                 )}
+            <h2 class='mainBlogTitle'>Other Post</h2>    
         </div>
+        
     );   
 }   

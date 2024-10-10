@@ -1,0 +1,113 @@
+section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.yourPost{
+    font-family: "Playfair Display";
+    font-size:45px;
+    font-weight: 600;
+    color:#000000;
+    margin-bottom:49px;
+    text-align: start;
+}
+
+.titleRow {
+    height: 49px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline:66px;
+    margin-top:71px;
+}
+
+.mainBlogTitle {
+    margin-bottom: 10px;
+}
+
+.createPostButtonA{
+    width:240px;
+    height:49px;
+    border-radius:14px;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 600;
+    background-color: #6D6A51;
+    border-style: none;
+}
+
+.posts {
+    width: 91%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-inline: 66px;
+    gap: 94px 224px;
+    margin-top: 49px;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:288px;
+}
+
+.editVisit {
+    display: flex;
+    flex-direction: row;
+}
+
+.lol {
+    width: 288px;
+    height: 162px;
+    background-color: #CCCCCC;
+}   
+
+.black{
+    width:144px;
+    height:35px;
+    border-bottom-left-radius:8px;
+    background-color: #212121;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size:23px;
+}
+
+.white {
+    width:144px;
+    height:29px;
+    border-bottom-right-radius:8px;
+    background-color: #fff;
+    color: #212121;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration:underline;
+    font-weight: 600;
+    font-size:23px;
+}
+
+.sampleText {
+    margin-top:29px;
+    margin-bottom:21px;
+    color: #212121;
+    font-size:28px;
+    font-weight:600;
+}
+
+.content {
+    color: #212121;
+    font-size:26px;
+    font-weight:500;
+    text-align: center;
+}
