@@ -18,7 +18,7 @@ export default function Header(){
             </div>
             <nav>
                 <ul>
-                    <li className={pathname === '/viewPost' ? 'active' : ''}>
+                    <li className={pathname.includes('/viewPost') ? 'active' : ''}>
                         <Link href="/viewPost">
                             BLOG
                         </Link>

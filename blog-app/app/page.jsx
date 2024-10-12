@@ -1,7 +1,10 @@
-// home page
+import './css/not-found.css'
 
-export default function Home(){
+export default function NotFound(){
     return(
-        <h2>wellcome to home</h2>
+    <section className="sectionNotFound">
+        <h1 className="NotFound">404</h1>
+        <p className="NotFound">Page Not Found</p>
+    </section>
     )
-}   
+}

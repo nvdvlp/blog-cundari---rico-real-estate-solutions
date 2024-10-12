@@ -10,7 +10,7 @@ export default async function ViewPost(){
     
     return (      
         <section>
-            <div class='titleRow'>
+            <div class='yourPostRow'>
                 <h2 class='yourPost'>Your Posts</h2>
                 <Link href='viewPost/CreatePost'>
                     <button class='createPostButtonA'>
@@ -20,9 +20,9 @@ export default async function ViewPost(){
             </div>
             <section class='posts'>
             {posts.map((post, index) => (
-                    <div className='post' key={index}>
+                    <div className='postview' key={index}>
                         {/* <img src={post.imageUrl} alt="" /> */}
-                        <div className='lol'></div>
+                        <div class='lol'></div>
                         <div className='editVisit'>
                             <div className='black'>Edit</div>
                             <div className='white'>Visit</div>

@@ -73,14 +73,12 @@ input {
     margin-top:68px;
 }
 
-button {
+.createPostButton{
     width:240px;
     height:49px;
-}
-
-.createPostButton{
+    cursor: pointer;
     border-radius:14px;
-    background-color: #171717;
+    background-color: #A49471;
     color: #fff;
     font-size:19px;
     font-weight: 600;
@@ -88,6 +86,9 @@ button {
 }
 
 .cancelPost{
+    width:240px;
+    height:49px;
+    cursor: pointer;
     background-color: #fff;
     color:#636363;
     border-style: none;
@@ -117,4 +118,30 @@ button {
     width: 86px;
     width: 86px;
     color: #636363;
+    margin-bottom: 10px;
 }
+
+.warning {
+    color:#3e3e3e;
+    font-size:14px;
+    font-weight: 600;
+}
+
+.uploadButton {
+    width: 200px;
+    height: 40px;
+    margin-top: 10px;
+    font-size: 16px;
+    background-color: #636363;
+    color: #FFF;
+    font-size:18px;
+    font-weight: 400;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.fileInput {
+    display: none; 
+}
+

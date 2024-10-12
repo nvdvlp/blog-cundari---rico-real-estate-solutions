@@ -15,7 +15,8 @@ section {
     text-align: start;
 }
 
-.titleRow {
+.yourPostRow {
+    width: 90%;
     height: 49px;
     display: flex;
     flex-direction: row;
@@ -36,8 +37,9 @@ section {
     color: #fff;
     font-size: 19px;
     font-weight: 600;
-    background-color: #6D6A51;
+    background-color: #A49471;
     border-style: none;
+    cursor: pointer;
 }
 
 .posts {
@@ -51,7 +53,7 @@ section {
     margin-top: 49px;
 }
 
-.post {
+.postview {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,16 +61,17 @@ section {
     width:288px;
 }
 
-.editVisit {
-    display: flex;
-    flex-direction: row;
-}
 
 .lol {
     width: 288px;
     height: 162px;
     background-color: #CCCCCC;
 }   
+
+.editVisit {
+    display: flex;
+    flex-direction: row;
+}
 
 .black{
     width:144px;

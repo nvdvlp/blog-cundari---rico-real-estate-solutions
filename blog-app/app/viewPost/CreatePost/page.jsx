@@ -73,43 +73,48 @@ export default function CreatePost() {
         setDraggedImage(null);
 
         // path blog
-        router.push('/blog');
+        router.push('/viewPost/CreatePost/userPost');
     };
 
-    const handleDragImage = (e) =>{
-        e.preventDefault();
-    }
-
-    const handleDropImage = (e) => {
-        e.preventDefault();
-        const file = e.dataTransfer.files[0];
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
                 img.src = event.target.result;
-                console.log(img.src);
-                img.onload = () => {
-                    console.log("img loaded");
-                    const minWidth = 640; 
-                    const minHeight = 360; 
 
-                    console.log("image dimensions:", img.width, img.height);
+                img.onload = () => {
+                    const minWidth = 640;
+                    const minHeight = 360;
+
                     if (img.width < minWidth || img.height < minHeight) {
-                        alert(`The image must be at least ${minWidth}px wide and ${minHeight}px tall.`);
+                        const canvas = document.createElement('canvas');
+                        let scaleFactor = Math.max(minWidth / img.width, minHeight / img.height);
+
+                        canvas.width = img.width * scaleFactor;
+                        canvas.height = img.height * scaleFactor;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        const resizedImage = canvas.toDataURL('image/jpeg');
+                        setDraggedImage(resizedImage);
                     } else {
-                        // Si la imagen cumple con las dimensiones, se establece en el estado
                         setDraggedImage(event.target.result);
-                        console.log("Imagen válida, actualizada en el estado.");
                     }
                 };
             };
-            // archivo cargado y guardado en base64
             reader.readAsDataURL(file);
         } else {
-            alert('Please drag a valid image.');
-            console.error('please upload a valid image file');
+            alert('Please select a valid image.');
         }
+    };
+
+    const handleDropImage = (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        handleFileUpload({ target: { files: [file] } });
     };
 
     // const handleDownloadHTML = () => {
@@ -134,19 +139,33 @@ export default function CreatePost() {
     return (
         <section>
             <h2 class='createPostTilte'>Create Post</h2>
+    
             <div class='rowPost'>
-
-                <div
-                class='drag-and-drop-zone'
-                onDragOver={handleDragImage}
+            <div 
+                className='drag-and-drop-zone'
+                onDragOver={(e) => e.preventDefault()}
                 onDrop={handleDropImage}
-                >
-                {draggedImage ? (
-                            <img src={draggedImage} alt="Uploaded"/>
-                        ) : (
-                            <><FontAwesomeIcon icon={faImage} size="2x" class="imageIcon" /><p class='dropText'>Drop an image or select a file</p></>
-                        )}
-                </div> 
+            >
+                    {draggedImage ? (
+                        <img src={draggedImage} alt="Uploaded" />
+                    ) : (
+                        <>
+                            <FontAwesomeIcon icon={faImage} size="2x" class="imageIcon" />
+                            <p className='dropText'>Drop an image or select a file</p>
+                            <p class='warning'>The image is recommended to be greater than 360*640px</p>
+                            <button className="uploadButton" onClick={() => document.getElementById('imageInput').click()}>
+                                Select Image
+                            </button>
+                            <input
+                            type="file"
+                            id="imageInput"
+                            accept="image/*"
+                            onChange={handleFileUpload}
+                            className="fileInput" 
+                            />  
+                        </>
+                    )}
+            </div>
 
                 <div class='inputContainer'>
                     <h2 class='textInputPost'>Title</h2>
@@ -176,7 +195,9 @@ export default function CreatePost() {
                 <button class='createPostButton' onClick={handleSavePost} style={{ marginTop: '10px' }}>
                     Create Post
                 </button>
-                <button class='cancelPost'>Cancel</button>
+                <button className='cancelPost' onClick={() => router.back()}>
+                    Cancel
+                </button>
                 {/* <button onClick={handleDownloadHTML}>descargar HTML</button> */}
             </div>
 
