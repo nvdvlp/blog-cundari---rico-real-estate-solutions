@@ -1,28 +1,28 @@
-"use client"
-import { useState } from "react";
+// "use client"
+// import { useState } from "react";
 
-function SearchInput({onSearch, posts}){
-    const [inputValue, setInputValue] = useState('');
+// function SearchInput({onSearch, posts}){
+//     const [inputValue, setInputValue] = useState('');
     
-    const handleInputChange = (e) =>{
-        setInputValue(e.target.value)
-    }
+//     const handleInputChange = (e) =>{
+//         setInputValue(e.target.value)
+//     }
 
-    const handleButtonClick = () => {
-        console.log(inputValue); 
-    };
+//     const handleButtonClick = () => {
+//         console.log(inputValue); 
+//     };
 
-    return(
-    <div>
-        <input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Search Post"
-        />
-        <button onClick={handleButtonClick}>Search</button>
-    </div>
-    )
-}
+//     return(
+//     <div>
+//         <input
+//         type="text"
+//         value={inputValue}
+//         onChange={handleInputChange}
+//         placeholder="Search Post"
+//         />
+//         <button onClick={handleButtonClick}>Search</button>
+//     </div>
+//     )
+// }
 
-export default SearchInput;
+// export default SearchInput;

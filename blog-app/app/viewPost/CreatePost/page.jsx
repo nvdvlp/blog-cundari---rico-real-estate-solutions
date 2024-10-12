@@ -4,20 +4,19 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { usePostContext } from '../../context/context.jsx'; 
 import { useRouter } from 'next/navigation'; 
-import '../../css/CreatePost.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+import '../../css/CreatePost.css';
+
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const modules = {
-toolbar: [
-    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-    ['link', 'image'],
-    ['clean']
-],
+    toolbar: [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ size: [] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['link', 'image'],
+        ['clean']
+    ],
 };
 
 const formats = [
@@ -35,12 +34,12 @@ const formats = [
     'image'
 ];
 
-//agregar post
+// Agregar post
 export default function CreatePost() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
-    const [draggedImage, setDraggedImage] = useState(null)
+    const [draggedImage, setDraggedImage] = useState(null);
     const { addPost } = usePostContext(); 
     const router = useRouter(); 
 
@@ -55,24 +54,33 @@ export default function CreatePost() {
             return;
         }
 
-        // guardar el post si los campos están llenos
+        // Guardar el post si los campos están llenos
+        const currentDate = new Date().toLocaleDateString();
+
         const newPost = {
             title,
             description,
             content,
-            image: draggedImage
+            image: draggedImage,
+            date: currentDate,
+            socialMedia: {
+                whatsapp: 'your-whatsapp-link',
+                twitter: 'your-twitter-link',
+                instagram: 'your-instagram-link',
+                facebook: 'your-facebook-link'
+            }
         };
         
         addPost(newPost);
         console.log(newPost);
 
-        // limpa los campos
+        // Limpiar los campos
         setTitle('');
         setDescription('');
         setContent('');
         setDraggedImage(null);
 
-        // path blog
+        // Redireccionar a la ruta correspondiente
         router.push('/viewPost/CreatePost/userPost');
     };
 
@@ -117,94 +125,72 @@ export default function CreatePost() {
         handleFileUpload({ target: { files: [file] } });
     };
 
-    // const handleDownloadHTML = () => {
-    //     const html = new Blob([content], { type: 'text/html' });
-    //     const url = window.URL.createObjectURL(html);
-
-    //     //Enlace temporal para la descarga del html
-    //     const a = document.createElement('a');
-    //     a.href = url;
-    //     //nombre del archivo 
-    //     a.download = 'post.html';
-    //     //agrega el enlace al DOM
-    //     document.body.appendChild(a);
-    //     a.click();
-    //     //quita el enlace al DOM
-    //     document.body.removeChild(a);
-
-    //     //liberar el objeto URL
-    //     window.URL.revokeObjectURL(url);
-    // }
-
     return (
-        <section>
-            <h2 class='createPostTilte'>Create Post</h2>
+        <section className='createPost'>
+            <h2 className='createPost__title'>Create Post</h2>
     
-            <div class='rowPost'>
-            <div 
-                className='drag-and-drop-zone'
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={handleDropImage}
-            >
+            <div className='createPost__informationContainer'>
+                <div 
+                    className='informationContainer__dragAndDropZone'
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={handleDropImage}
+                >
                     {draggedImage ? (
                         <img src={draggedImage} alt="Uploaded" />
                     ) : (
-                        <>
-                            <FontAwesomeIcon icon={faImage} size="2x" class="imageIcon" />
-                            <p className='dropText'>Drop an image or select a file</p>
-                            <p class='warning'>The image is recommended to be greater than 360*640px</p>
-                            <button className="uploadButton" onClick={() => document.getElementById('imageInput').click()}>
-                                Select Image
-                            </button>
-                            <input
-                            type="file"
-                            id="imageInput"
-                            accept="image/*"
-                            onChange={handleFileUpload}
-                            className="fileInput" 
-                            />  
+                        <>  
+                            <div className='informationContainer__imgFolderContainer'>
+                                <ion-icon class='imgFolderContainer__imgIcon' name="images"></ion-icon>
+                                <p class='imgFolderContainer__dropText'>Drop an image or select a file</p>
+                                <button className="imgFolderContainer__uploadButton" onClick={() => document.getElementById('imageInput').click()}>
+                                    Select File
+                                </button>
+                                <input
+                                    type="file"
+                                    id="imageInput"
+                                    accept="image/*"
+                                    onChange={handleFileUpload}
+                                    className="fileInput" 
+                                />
+                            </div>
+                            <p className='imgFolderContainer__warningMessage'>The image is recommended to be greater than 360*640px</p>
                         </>
                     )}
-            </div>
+                </div>
 
-                <div class='inputContainer'>
-                    <h2 class='textInputPost'>Title</h2>
+                <div className='informationContainer__inputContainer'>
+                    <h2 className='inputContainer__textInputPost'>Title</h2>
                     <input 
-                    type="text" 
-                    class='size1'
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                        type="text" 
+                        className='inputContainer__size1'
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     />
-                    <h2 class='textInputPost'>Description (optional)</h2>
+                    <h2 className='inputContainer__textInputPost'>Description (optional)</h2>
                     <textarea
-                    class='size2'
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}>
+                        className='inputContainer__size2'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}>
                     </textarea>
                 </div>
             </div>
             
-            <ReactQuill class='reactQuill' 
-            value={content}
-            onChange={setContent}
-            modules={modules}
-            formats={formats} 
+            <ReactQuill 
+                className='reactQuill' 
+                value={content}
+                onChange={setContent}
+                modules={modules}
+                formats={formats} 
             />
 
-            <div class='buttonContainer'>
-                <button class='createPostButton' onClick={handleSavePost} style={{ marginTop: '10px' }}>
+            <div className='createPost__buttonContainer'>
+                <button className='buttonContainer__createPostButton' onClick={handleSavePost} style={{ marginTop: '10px' }}>
                     Create Post
                 </button>
-                <button className='cancelPost' onClick={() => router.back()}>
+                <button className='buttonContainer__cancelPostButton' onClick={() => router.back()}>
                     Cancel
                 </button>
-                {/* <button onClick={handleDownloadHTML}>descargar HTML</button> */}
             </div>
-
-            {/* <div style={{ marginTop: '20px' }}>
-                <h3>Vista previa:</h3>
-                <div dangerouslySetInnerHTML={{ __html: content }} />
-            </div> */}
         </section>
-        );
+    );
 }

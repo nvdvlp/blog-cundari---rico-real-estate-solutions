@@ -2,57 +2,58 @@
 import Link from "next/link"
 import { usePostContext } from '../../../context/context';
 import { useRouter } from 'next/navigation'; 
-import '../../../css/preview.css'
+import '../../../css/userPost.css'
 
 export default async function UserPost(){
     const { posts } = usePostContext();
     const router = useRouter(); 
 
-    const postsSaved = Array(3).fill({
+    const postsSaved = Array(4).fill({
         title:'Sample Text',
         content: 'Lorem ipsum dolor amet sit sample text, maximum text to word break.',
     })
 
     return (      
-        <div class='preview'>
-        <h2 class='userPostTitle'>Post Created Successfully!</h2>
+        <div class='userPost'>
+        <h2 class='userPost__title'>Post Created Successfully!</h2>
 
         {posts.length > 0 ? (
             posts.map((post, index) => (
-            <div key={index} class='post'>
-                <div class='columnPostPreviewImage'>
-                    {post.image && <img class='postImg' src={post.image} alt="Post Image" style={{ maxWidth: '100%' }} />}
-                    <div className='editVisit'>
-                        <div className='black' onClick={() => router.back()}>
+            <div key={index} class='userPost__postCreated'>
+                {post.image && <img class='postCreated__postImg' src={post.image} alt="Post Image" style={{ maxWidth: '100%' }} />}
+                <div class='postCreated__columnPostPreview'>
+                    <h2 class='columnPostPreview__titlePreviewPost'>{post.title}</h2>
+                    <h3 class='columnPostPreview__descriptionPreviewPost'>{post.description}</h3>
+                    <div className='columnPostPreview__editButtonsContainer'>
+                        <div className='editButtonsContainer__editButton' onClick={() => router.back()}>
                             Edit
                         </div>
-                        <Link href={`/viewPost/CreatePost/userPost/post/${index}`}>
-                            <div className='white'>Visit</div>
+                        <Link href={`/viewPost/CreatePost/userPost/post`}>
+                            <div className='editButtonsContainer__visitButton'>Visit</div>
                         </Link>
                     </div>
                 </div>
-                <div class='columnPostPreview'>
-                    <h2 class='titlePreviewPost'>{post.title}</h2>
-                    <h3 class='descriptionPreviewPost'>{post.description}</h3>
-                </div>
+
             </div>
                 ))
                 ) : (
-                    <p class='nonePost'>There are any post saved</p>
+                    <p class='userPost__nonePost'>There are any post saved</p>
                 )}
-                <div class='otherPostSeparation'></div>
-            <h2 class='userPostTitle'>Other Post</h2>  
-
-            <div className='posts'>
-                {postsSaved.map((dummyPost, index) => (
-                    <div key={index} className='postview'>
-                        <div class='lol'></div>
-                        <div className='editVisit'>
-                            <div className='black'>Edit</div>
-                            <div className='white'>Visit</div>
+                
+            <h2 class='userPost__title'>Other Post</h2>  
+            <div className='userPost__postContainer'>
+                {postsSaved.map((post, index) => (
+                    <div class='userPost__post' key={index}>
+                        <div class='userPost__imgPost'>
+                            <div class='userPost__iconsSection'>
+                                <ion-icon class='userPost__create' name="create"></ion-icon>
+                                <ion-icon class='userPost__link' name="link"></ion-icon>
+                            </div>
                         </div>
-                        <h2 className='sampleText'>{dummyPost.title}</h2>
-                        <h3 className='content'>{dummyPost.content}</h3>
+                        <div class='userPost__textContainer'>
+                            <h2 class='userPost__postTitle'>{post.title}</h2>
+                            <h2 class='userPost__postContent'>{post.content}</h2>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -9,29 +9,31 @@ export default async function ViewPost(){
     })
     
     return (      
-        <section>
-            <div class='yourPostRow'>
-                <h2 class='yourPost'>Your Posts</h2>
+        <section class='viewPost'>
+
+            <div class='viewPost__sectionTitle'>
+                <h2 class='viewPost__title'>Your Posts</h2>
                 <Link href='viewPost/CreatePost'>
-                    <button class='createPostButtonA'>
-                        Create Post
-                    </button>
+                    <button class='viewPost__newPost'>New Post</button>
                 </Link>
             </div>
-            <section class='posts'>
+
+            <div class='viewPost__postContainer'>
             {posts.map((post, index) => (
-                    <div className='postview' key={index}>
-                        {/* <img src={post.imageUrl} alt="" /> */}
-                        <div class='lol'></div>
-                        <div className='editVisit'>
-                            <div className='black'>Edit</div>
-                            <div className='white'>Visit</div>
+                    <div class='viewPost__post' key={index}>
+                        <div class='viewPost__imgPost'>
+                            <div class='viewPost__iconsSection'>
+                                <ion-icon class='viewPost__create' name="create"></ion-icon>
+                                <ion-icon class='viewPost__link' name="link"></ion-icon>
+                            </div>
                         </div>
-                        <h2 className='sampleText'>{post.title}</h2>
-                        <h2 className='content'>{post.content}</h2>
+                        <div class='viewPost__textContainer'>
+                            <h2 class='viewPost__postTitle'>{post.title}</h2>
+                            <h2 class='viewPost__postContent'>{post.content}</h2>
+                        </div>
                     </div>
                 ))}
-            </section>
+            </div>
         </section>
     );   
 }   

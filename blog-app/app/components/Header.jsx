@@ -2,7 +2,7 @@
 //link for connect the routes
 import { usePathname } from 'next/navigation'; 
 import Link from 'next/link';
-import '../css/Header.css'
+import '../css/Header.css';
 
 export default function Header(){
     const pathname = usePathname(); 
@@ -10,7 +10,7 @@ export default function Header(){
     return(
         <header>
             <div class='brandContainer'>
-                <img class='logo' src="../public/logo.jpg" alt="" />
+                <div class='logo'></div>
                 <div class='nameLogo'>
                     <h2 class='cudariRico'>Cundari & Rico</h2>
                     <h2 class='realState'>Real Estate Solutions</h2>    

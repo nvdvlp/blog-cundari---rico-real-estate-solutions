@@ -1,22 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-section {
+.createPost {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding: 62px;
 }
 
-.rowPost {
-    display: flex;
-    flex-direction: row;
-    margin-bottom:42px;
-}
-
-.createPostTilte{
+.createPost__title{
     font-family: "Playfair Display";
     font-size:45px;
     font-weight: 600;
@@ -26,13 +19,70 @@ section {
     width: 1316px;
 }
 
-.inputContainer {
+.createPost__informationContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom:42px;
+}
+
+.informationContainer__dragAndDropZone {
+    width: 640px;
+    height: 360px;
+    border: 2px solid #939393;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; 
+    background-color: #CCCCCC;
+}
+
+.informationContainer__imgFolderContainer {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 81px;
+    margin-top: 83px;
+}
+
+.imgFolderContainer__imgIcon{
+    font-size: 86px;
+    color: #636363;
+    margin-bottom: 10px;
+}
+
+.imgFolderContainer__dropText {
+    color:#636363;
+    font-size:19px;
+    font-weight: 600;
+}
+
+.imgFolderContainer__uploadButton {
+    width: 139px;
+    height: 26px;
+    background-color: #404040;
+    color: #CCCCCC;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 9px;
+}
+
+.imgFolderContainer__warningMessage {
+    color:#999999;
+    font-size:14px;
+    font-weight: 600;
+}
+
+.informationContainer__inputContainer {
     display: flex;
     flex-direction: column;
     padding-left:42px;
 }
 
-.textInputPost {
+.inputContainer__textInputPost {
     font-family: "Playfair Display";
     font-size:23px;
     font-weight: 500;
@@ -47,12 +97,12 @@ input {
     width:630px;
 }
 
-.size1 {
+.inputContainer__size1 {
     height:34px;
     margin-bottom: 12px;
 }
 
-.size2 {
+.inputContainer__size2 {
     border-radius:8px;
     background-color: #F7F7F7;
     border: 1px solid #ADADAD;
@@ -69,23 +119,23 @@ input {
     height:277px;
 }
 
-.buttonContainer{
+.createPost__buttonContainer{
     margin-top:68px;
 }
 
-.createPostButton{
+.buttonContainer__createPostButton{
     width:240px;
     height:49px;
     cursor: pointer;
-    border-radius:14px;
-    background-color: #A49471;
+    border-radius:4px;
+    background-color: #212121;
     color: #fff;
     font-size:19px;
     font-weight: 600;
     border-style: none;
 }
 
-.cancelPost{
+.buttonContainer__cancelPostButton{
     width:240px;
     height:49px;
     cursor: pointer;
@@ -96,50 +146,7 @@ input {
     font-weight: 600;
 }
 
-.drag-and-drop-zone {
-    width: 640px;
-    height: 360px;
-    border: 2px solid #939393;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; 
-    background-color: #CCCCCC;
-}
 
-.dropText {
-    color:#636363;
-    font-size:19px;
-    font-weight: 600;
-}
-
-.imageIcon{
-    width: 86px;
-    width: 86px;
-    color: #636363;
-    margin-bottom: 10px;
-}
-
-.warning {
-    color:#3e3e3e;
-    font-size:14px;
-    font-weight: 600;
-}
-
-.uploadButton {
-    width: 200px;
-    height: 40px;
-    margin-top: 10px;
-    font-size: 16px;
-    background-color: #636363;
-    color: #FFF;
-    font-size:18px;
-    font-weight: 400;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
 
 .fileInput {
     display: none; 
