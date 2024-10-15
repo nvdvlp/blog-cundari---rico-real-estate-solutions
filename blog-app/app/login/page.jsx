@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './login.css'
 import Supabase from '../lib/supabaseClient';
+import { useEffect } from 'react';
 
 const Login = () => {
   const router = useRouter();
@@ -10,6 +11,16 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   let user;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+      const token = localStorage.getItem('authID'); // O sessionStorage, según tu autenticación
+      if (token) {
+          router.push('/viewPost'); // Redirige a login si no está autenticado
+      } else {
+          setIsAuthenticated(true);
+      }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

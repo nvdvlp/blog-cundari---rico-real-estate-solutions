@@ -12,6 +12,7 @@ export default function Header(){
 
     async function logoutUser() {
         const { error } = await Supabase.auth.signOut();
+        localStorage.removeItem('authID')
       
         if (error) {
           console.error('Error signing out:', error.message);
