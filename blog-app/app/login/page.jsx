@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './login.css'
 import { createClient } from '@supabase/supabase-js'
+import './login.css'
 
 const Login = () => {
   const supabaseUrl = 'https://ppxclfscuebswbjhjtcz.supabase.co'  // Replace with your Supabase URL

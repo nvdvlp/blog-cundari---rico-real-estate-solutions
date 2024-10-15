@@ -33,6 +33,11 @@ export default function Header(){
                                 PROPERTIES
                             </Link>
                         </li> */}
+                    <button class='buttonLogin'>
+                        <Link href="/login" class='loginTextButton'>
+                            Login
+                        </Link>
+                    </button>
                 </ul>
             </nav>
         </header>

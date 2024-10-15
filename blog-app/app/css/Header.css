@@ -44,6 +44,7 @@ ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     list-style-type: none;
     padding: 0; 
     margin: 0;
@@ -68,4 +69,18 @@ a {
 .header__link{
     font-weight: 500;
     margin: 0;
+}
+
+.buttonLogin {
+    width:100px;
+    height:40px;
+    border-radius: 5px;
+    border-style: none;
+    background-color: #212121;
+}
+
+.loginTextButton {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
 }

@@ -20,7 +20,7 @@ function ViewPost(){
 
     if (!isAuthenticated) return <div>Loading...</div>;
 
-    const posts = Array(10).fill({
+    const posts = Array(4).fill({
         title:'Much longer sample text for example',
         content: 'Lorem ipsum dolor amet sit sample text, maximum text to word break.',
     })
