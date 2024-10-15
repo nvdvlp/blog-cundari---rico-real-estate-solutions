@@ -4,9 +4,6 @@ import { Inter } from 'next/font/google'
 //import components all components in layout
 import Header from './components/Header'
 import { PostProvider } from './context/context.jsx'; 
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-config.autoAddCss = false; // Evita la inyección automática de CSS
 
 export const metadata = {
   title: 'Cundari & Rico Real Estate Solutions',
@@ -32,10 +29,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-      <PostProvider>
-        <Header />
+        <PostProvider>
+          <Header />
           {children}
-
         </PostProvider>
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script noModule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

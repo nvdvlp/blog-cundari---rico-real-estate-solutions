@@ -14,16 +14,16 @@ export default async function UserPost(){
     })
 
     return (      
-        <div class='userPost'>
-        <h2 class='userPost__title'>Post Created Successfully!</h2>
+        <div className='userPost'>
+        <h2 className='userPost__title'>Post Created Successfully!</h2>
 
         {posts.length > 0 ? (
             posts.map((post, index) => (
-            <div key={index} class='userPost__postCreated'>
-                {post.image && <img class='postCreated__postImg' src={post.image} alt="Post Image" style={{ maxWidth: '100%' }} />}
-                <div class='postCreated__columnPostPreview'>
-                    <h2 class='columnPostPreview__titlePreviewPost'>{post.title}</h2>
-                    <h3 class='columnPostPreview__descriptionPreviewPost'>{post.description}</h3>
+            <div key={index} className='userPost__postCreated'>
+                {post.image && <img className='postCreated__postImg' src={post.image} alt="Post Image" style={{ maxWidth: '100%' }} />}
+                <div className='postCreated__columnPostPreview'>
+                    <h2 className='columnPostPreview__titlePreviewPost'>{post.title}</h2>
+                    <h3 className='columnPostPreview__descriptionPreviewPost'>{post.description}</h3>
                     <div className='columnPostPreview__editButtonsContainer'>
                         <div className='editButtonsContainer__editButton' onClick={() => router.back()}>
                             Edit
@@ -37,22 +37,22 @@ export default async function UserPost(){
             </div>
                 ))
                 ) : (
-                    <p class='userPost__nonePost'>There are any post saved</p>
+                    <p className='userPost__nonePost'>There are any post saved</p>
                 )}
                 
-            <h2 class='userPost__title'>Other Post</h2>  
+            <h2 className='userPost__title'>Other Post</h2>  
             <div className='userPost__postContainer'>
                 {postsSaved.map((post, index) => (
-                    <div class='userPost__post' key={index}>
-                        <div class='userPost__imgPost'>
-                            <div class='userPost__iconsSection'>
-                                <ion-icon class='userPost__create' name="create"></ion-icon>
-                                <ion-icon class='userPost__link' name="link"></ion-icon>
+                    <div className='userPost__post' key={index}>
+                        <div className='userPost__imgPost'>
+                            <div className='userPost__iconsSection'>
+                                <ion-icon className='userPost__create' name="create"></ion-icon>
+                                <ion-icon className='userPost__link' name="link"></ion-icon>
                             </div>
                         </div>
-                        <div class='userPost__textContainer'>
-                            <h2 class='userPost__postTitle'>{post.title}</h2>
-                            <h2 class='userPost__postContent'>{post.content}</h2>
+                        <div className='userPost__textContainer'>
+                            <h2 className='userPost__postTitle'>{post.title}</h2>
+                            <h2 className='userPost__postContent'>{post.content}</h2>
                         </div>
                     </div>
                 ))}

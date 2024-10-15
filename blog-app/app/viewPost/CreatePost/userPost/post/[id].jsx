@@ -13,18 +13,18 @@ export default function PostPage({ params }) {
     // }
 
     // return (
-    //     <div class='postDetail'>
+    //     <div className='postDetail'>
     //         <button className='backButton' onClick={() => router.back()}>
     //             Back
     //         </button>
-    //         <div class='postContent'>
+    //         <div className='postContent'>
     //             {post.image && <img className='postImageDetail' src={post.image} alt="Post Image" />}
-    //             <h2 class='postTitle'>{post.title}</h2>
-    //             <h3 class='postDescription'>{post.description}</h3>
-    //             <p class='postDate'>Published on: {post.date}</p>
-    //             <div class='postBody' dangerouslySetInnerHTML={{ __html: post.content }} />
+    //             <h2 className='postTitle'>{post.title}</h2>
+    //             <h3 className='postDescription'>{post.description}</h3>
+    //             <p className='postDate'>Published on: {post.date}</p>
+    //             <div className='postBody' dangerouslySetInnerHTML={{ __html: post.content }} />
 
-    //             <div class='socialMediaLinks'>
+    //             <div className='socialMediaLinks'>
     //                 <a href={post.socialMedia.whatsapp}>WhatsApp</a>
     //                 <a href={post.socialMedia.twitter}>Twitter</a>
     //                 <a href={post.socialMedia.instagram}>Instagram</a>

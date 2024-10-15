@@ -72,7 +72,8 @@ export default function CreatePost() {
         };
         
         addPost(newPost);
-        console.log(newPost);
+        localStorage.setItem("postExample", content)
+        console.log(content);
 
         // Limpiar los campos
         setTitle('');
@@ -140,8 +141,8 @@ export default function CreatePost() {
                     ) : (
                         <>  
                             <div className='informationContainer__imgFolderContainer'>
-                                <ion-icon class='imgFolderContainer__imgIcon' name="images"></ion-icon>
-                                <p class='imgFolderContainer__dropText'>Drop an image or select a file</p>
+                                <ion-icon className='imgFolderContainer__imgIcon' name="images"></ion-icon>
+                                <p className='imgFolderContainer__dropText'>Drop an image or select a file</p>
                                 <button className="imgFolderContainer__uploadButton" onClick={() => document.getElementById('imageInput').click()}>
                                     Select File
                                 </button>

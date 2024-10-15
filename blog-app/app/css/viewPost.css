@@ -43,8 +43,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
     gap: 93px 46px;
-    padding-top: 63px;
-    padding-bottom: 46px;
+    padding-block: 63px;
 }
 
 .viewPost__post {
