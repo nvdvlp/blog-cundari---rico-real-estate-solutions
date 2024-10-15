@@ -1,15 +1,11 @@
 'use client'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@supabase/supabase-js'
 import './login.css'
+import Supabase from '../lib/supabaseClient';
 
 const Login = () => {
-  const supabaseUrl = 'https://ppxclfscuebswbjhjtcz.supabase.co'  // Replace with your Supabase URL
-  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'  // Replace with your Supabase anon key
   const router = useRouter();
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,12 +17,14 @@ const Login = () => {
     console.log('Password:', password);
     await loginUser(email, password)
     user = await getAuthenticatedUser();
+    console.log("user")
+    console.log(user)
     localStorage.setItem('authID', btoa(user.id))
     router.push('/viewPost');
   };
 
   async function loginUser(email, password) {
-    const { user, error } = await supabase.auth.signInWithPassword({
+    const { user, error } = await Supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
@@ -35,10 +33,12 @@ const Login = () => {
       console.error('Error logging in:', error);
       return null;
     }
+
+    return user
   }
 
   async function getAuthenticatedUser() {
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const { data: { user }, error } = await Supabase.auth.getUser();
 
     if (error) {
       console.error('Error fetching user:', error);

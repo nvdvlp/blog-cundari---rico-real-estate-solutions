@@ -3,11 +3,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import '../css/viewPost.css'
 import Link from 'next/link';
+import Supabase from '../lib/supabaseClient';
 
 function ViewPost(){
-
+    const [posts, setPosts] = useState([]);
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const token = localStorage.getItem('authID'); // Or sessionStorage, depending on your auth
@@ -18,12 +20,39 @@ function ViewPost(){
         }
     }, [router]);
 
-    if (!isAuthenticated) return <div>Loading...</div>;
-
-    const posts = Array(4).fill({
-        title:'Much longer sample text for example',
-        content: 'Lorem ipsum dolor amet sit sample text, maximum text to word break.',
-    })
+    useEffect(() => {
+        async function fetchPosts() {
+          // Get the authenticated user
+          const { data: { user }, error: authError } = await Supabase.auth.getUser();
+    
+          if (authError || !user) {
+            console.error('Error fetching user:', authError);
+            return;
+          }
+    
+          // Fetch posts where user_uuid matches the logged-in user ID
+          const { data, error } = await Supabase
+            .from('Posts')
+            .select('*')
+            .eq('user_uuid', user.id);  // Filters posts by user_uuid
+    
+          if (error) {
+            console.error('Error fetching posts:', error);
+          } else {
+            setPosts(data);
+            console.log("data")
+            console.log(data)
+          }
+    
+          setLoading(false);
+        }
+    
+        fetchPosts();
+      }, []);  // Empty array ensures this runs only once when the component mounts
+    
+      if (loading) {
+        return <p>Loading posts...</p>;
+      }
     
     return (      
         <section className='viewPost'>
@@ -45,8 +74,8 @@ function ViewPost(){
                             </div>
                         </div>
                         <div className='viewPost__textContainer'>
-                            <h2 className='viewPost__postTitle'>{post.title}</h2>
-                            <h2 className='viewPost__postContent'>{post.content}</h2>
+                            <h2 className='viewPost__postTitle'>{post.post_title}</h2>
+                            <h2 className='viewPost__postContent'>{post.post_desc}</h2>
                         </div>
                     </div>
                 ))}
