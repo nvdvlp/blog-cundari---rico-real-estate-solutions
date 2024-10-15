@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { usePostContext } from '../../context/context.jsx'; 
 import { useRouter } from 'next/navigation'; 
 import '../../css/CreatePost.css';
+import createPost from '@/app/lib/createPost.js';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -43,7 +44,7 @@ export default function CreatePost() {
     const { addPost } = usePostContext(); 
     const router = useRouter(); 
 
-    const handleSavePost = () => {
+    const  handleSavePost = async () => {
         if (!title.trim()) {
             alert('The title post cannot be empty.');
             return;
@@ -72,17 +73,19 @@ export default function CreatePost() {
         };
         
         addPost(newPost);
-        localStorage.setItem("postExample", content)
-        console.log(content);
+        const { successMessage, error } = await createPost(title, description, draggedImage, content)
 
-        // Limpiar los campos
-        setTitle('');
-        setDescription('');
-        setContent('');
-        setDraggedImage(null);
-
-        // Redireccionar a la ruta correspondiente
-        router.push('/viewPost/CreatePost/userPost');
+        if(error){
+            alert("error creando post")
+            console.log(error)
+        } else if(successMessage){
+            console.log("CREATED SUCCESFULLY")
+            setTitle('');
+            setDescription('');
+            setContent('');
+            setDraggedImage(null);
+            router.push('/viewPost')
+        }
     };
 
     const handleFileUpload = (e) => {
@@ -109,8 +112,12 @@ export default function CreatePost() {
 
                         const resizedImage = canvas.toDataURL('image/jpeg');
                         setDraggedImage(resizedImage);
+                        console.log("resizedImage")
+                        console.log(resizedImage)
                     } else {
                         setDraggedImage(event.target.result);
+                        console.log("resizedImage")
+                        console.log(event.target.result)
                     }
                 };
             };
