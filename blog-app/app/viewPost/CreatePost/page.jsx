@@ -148,7 +148,7 @@ export default function CreatePost() {
                     ) : (
                         <>  
                             <div className='informationContainer__imgFolderContainer'>
-                                <ion-icon className='imgFolderContainer__imgIcon' name="images"></ion-icon>
+                                <ion-icon class='imgFolderContainer__imgIcon' name="images"></ion-icon>
                                 <p className='imgFolderContainer__dropText'>Drop an image or select a file</p>
                                 <button className="imgFolderContainer__uploadButton" onClick={() => document.getElementById('imageInput').click()}>
                                     Select File

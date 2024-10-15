@@ -12,9 +12,9 @@ function ViewPost(){
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem('authID'); // Or sessionStorage, depending on your auth
+        const token = localStorage.getItem('authID'); // O sessionStorage, según tu autenticación
         if (!token) {
-            router.push('/login'); // Redirect to login if not authenticated
+            router.push('/login'); // Redirige a login si no está autenticado
         } else {
             setIsAuthenticated(true);
         }
@@ -22,33 +22,34 @@ function ViewPost(){
 
     useEffect(() => {
         async function fetchPosts() {
-          // Get the authenticated user
-        const { data: { user }, error: authError } = await Supabase.auth.getUser();
-    
-        if (authError || !user) {
-            console.error('Error fetching user:', authError);
-            return;
+            // Obtén el usuario autenticado
+            const { data: { user }, error: authError } = await Supabase.auth.getUser();
+
+            if (authError || !user) {
+                console.error('Error fetching user:', authError);
+                return;
+            }
+
+            // Obtén los posts donde user_uuid coincide con el ID del usuario autenticado
+            const { data, error } = await Supabase
+                .from('Posts')
+                .select('*')
+                .eq('user_uuid', user.id);  // Filtra posts por user_uuid
+
+            if (error) {
+                console.error('Error fetching posts:', error);
+            } else {
+                setPosts(data);
+                console.log("data");
+                console.log(data);
+            }
+
+            setLoading(false);
         }
-    
-          // Fetch posts where user_uuid matches the logged-in user ID
-        const { data, error } = await Supabase
-            .from('Posts')
-            .select('*')
-            .eq('user_uuid', user.id);  // Filters posts by user_uuid
-    
-        if (error) {
-            console.error('Error fetching posts:', error);
-        } else {
-            setPosts(data);
-            console.log("data")
-            console.log(data)
-        }
-    
-        setLoading(false);
-        }
-    
+
         fetchPosts();
-      }, []);  // Empty array ensures this runs only once when the component mounts
+    }, []); 
+
     
     if (loading) {
         return <p>Loading posts...</p>;
@@ -67,12 +68,23 @@ function ViewPost(){
             <div className='viewPost__postContainer'>
             {posts.map((post, index) => (
                     <div className='viewPost__post' key={index}>
-                        <div className='viewPost__imgPost'>
+                            <img
+                            className='viewPost__imgPost'
+                            src={post.post_banner_img_b64}
+                            alt={post.post_title}
+                            />
                             <div className='viewPost__iconsSection'>
                                 <ion-icon className='viewPost__create' name="create"></ion-icon>
-                                <ion-icon className='viewPost__link' name="link"></ion-icon>
+                                <Link href={`/viewPost/CreatePost/userPost/post`}>
+                                    <ion-icon 
+                                    className='viewPost__link' 
+                                    name="link"
+                                    onClick={() => {
+                                        localStorage.setItem('selectedPost', JSON.stringify(post))
+                                    }}
+                                    ></ion-icon>
+                                </Link>
                             </div>
-                        </div>
                         <div className='viewPost__textContainer'>
                             <h2 className='viewPost__postTitle'>{post.post_title}</h2>
                             <h2 className='viewPost__postContent'>{post.post_desc}</h2>
