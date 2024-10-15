@@ -1,11 +1,25 @@
 'use client'; 
-//link for connect the routes
 import { usePathname } from 'next/navigation'; 
 import Link from 'next/link';
 import '../css/Header.css';
+import Supabase from '../lib/supabaseClient';
+import { useRouter } from 'next/navigation'; 
+
 
 export default function Header(){
     const pathname = usePathname(); 
+    const router = useRouter(); 
+
+    async function logoutUser() {
+        const { error } = await Supabase.auth.signOut();
+      
+        if (error) {
+          console.error('Error signing out:', error.message);
+        } else {
+          console.log('Successfully signed out');
+          router.push('/login')
+        }
+      }
 
     return(
         <header>
@@ -35,10 +49,8 @@ export default function Header(){
                         </li> */}
                         
                     {pathname !== '/login' && (
-                        <button className='buttonLogin'>
-                            <Link href="/login" className='loginTextButton'>
-                                Log Out
-                            </Link>
+                        <button className='buttonLogin loginTextButton' onClick={logoutUser}>
+                            Log Out
                         </button>
                     )}
                 </ul>
