@@ -33,11 +33,14 @@ export default function Header(){
                                 PROPERTIES
                             </Link>
                         </li> */}
-                    <button class='buttonLogin'>
-                        <Link href="/login" class='loginTextButton'>
-                            Login
-                        </Link>
-                    </button>
+                        
+                    {pathname !== '/login' && (
+                        <button className='buttonLogin'>
+                            <Link href="/login" className='loginTextButton'>
+                                Log Out
+                            </Link>
+                        </button>
+                    )}
                 </ul>
             </nav>
         </header>

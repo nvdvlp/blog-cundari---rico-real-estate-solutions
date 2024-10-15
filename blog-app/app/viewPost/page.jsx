@@ -23,36 +23,36 @@ function ViewPost(){
     useEffect(() => {
         async function fetchPosts() {
           // Get the authenticated user
-          const { data: { user }, error: authError } = await Supabase.auth.getUser();
+        const { data: { user }, error: authError } = await Supabase.auth.getUser();
     
-          if (authError || !user) {
+        if (authError || !user) {
             console.error('Error fetching user:', authError);
             return;
-          }
+        }
     
           // Fetch posts where user_uuid matches the logged-in user ID
-          const { data, error } = await Supabase
+        const { data, error } = await Supabase
             .from('Posts')
             .select('*')
             .eq('user_uuid', user.id);  // Filters posts by user_uuid
     
-          if (error) {
+        if (error) {
             console.error('Error fetching posts:', error);
-          } else {
+        } else {
             setPosts(data);
             console.log("data")
             console.log(data)
-          }
+        }
     
-          setLoading(false);
+        setLoading(false);
         }
     
         fetchPosts();
       }, []);  // Empty array ensures this runs only once when the component mounts
     
-      if (loading) {
+    if (loading) {
         return <p>Loading posts...</p>;
-      }
+    }
     
     return (      
         <section className='viewPost'>
