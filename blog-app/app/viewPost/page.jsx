@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import '../css/viewPost.css'
 import Link from 'next/link';
 import Supabase from '../lib/supabaseClient';
+import Loader from '../components/loader';
 
 function ViewPost(){
     const [posts, setPosts] = useState([]);
@@ -49,10 +50,9 @@ function ViewPost(){
 
         fetchPosts();
     }, []); 
-
     
     if (loading) {
-        return <p>Loading posts...</p>;
+        return <Loader></Loader>
     }
     
     return (      

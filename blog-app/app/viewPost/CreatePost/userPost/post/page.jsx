@@ -1,8 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import Loader from '@/app/components/loader';
 import '../../../../css/post.css'
-
 
 export default function PostPage() {
     const router = useRouter();
@@ -29,7 +29,7 @@ export default function PostPage() {
     }, []);
 
     if (!postDetails) {
-        return <p>Loading post details...</p>;
+        return <Loader></Loader>
     }
 
     return (
