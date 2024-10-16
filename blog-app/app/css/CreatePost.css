@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+.createPost {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 62px;
+}
+
+.createPost__title{
+    font-family: "Playfair Display";
+    font-size:45px;
+    font-weight: 600;
+    color:#000000;
+    margin-bottom:49px;
+    text-align: start;
+    width: 1316px;
+}
+
+.createPost__informationContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom:42px;
+}
+
+.informationContainer__dragAndDropZone {
+    width: 640px;
+    height: 360px;
+    border: 2px solid #939393;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; 
+    background-color: #CCCCCC;
+}
+
+.informationContainer__imgFolderContainer {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 81px;
+    margin-top: 83px;
+}
+
+.imgFolderContainer__imgIcon{
+    font-size: 86px;
+    color: #636363;
+    margin-bottom: 10px;
+}
+
+.imgFolderContainer__dropText {
+    color:#636363;
+    font-size:19px;
+    font-weight: 600;
+}
+
+.imgFolderContainer__uploadButton {
+    width: 139px;
+    height: 26px;
+    background-color: #404040;
+    color: #CCCCCC;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 9px;
+}
+
+.imgFolderContainer__warningMessage {
+    color:#999999;
+    font-size:14px;
+    font-weight: 600;
+}
+
+.informationContainer__inputContainer {
+    display: flex;
+    flex-direction: column;
+    padding-left:42px;
+}
+
+.inputContainer__textInputPost {
+    font-family: "Playfair Display";
+    font-size:23px;
+    font-weight: 500;
+    color:#212121;
+    margin-bottom:12px;
+}
+
+input {
+    border-radius:8px;
+    background-color: #F7F7F7;
+    border: 1px solid #ADADAD;
+    width:630px;
+}
+
+.inputContainer__size1 {
+    height:34px;
+    margin-bottom: 12px;
+}
+
+.inputContainer__size2 {
+    border-radius:8px;
+    background-color: #F7F7F7;
+    border: 1px solid #ADADAD;
+    width:630px;
+    height: 220px;
+    width: 100%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    resize: none;
+}
+
+.quill  {
+    width:1316px;
+    height:277px;
+}
+
+.createPost__buttonContainer{
+    margin-top:68px;
+}
+
+.buttonContainer__createPostButton{
+    width:240px;
+    height:49px;
+    cursor: pointer;
+    border-radius:4px;
+    background-color: #212121;
+    color: #fff;
+    font-size:19px;
+    font-weight: 600;
+    border-style: none;
+}
+
+.buttonContainer__cancelPostButton{
+    width:240px;
+    height:49px;
+    cursor: pointer;
+    background-color: #fff;
+    color:#636363;
+    border-style: none;
+    font-size:19px;
+    font-weight: 600;
+}
+
+
+
+.fileInput {
+    display: none; 
+}
+
