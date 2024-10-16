@@ -1,10 +1,13 @@
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation';
+import Loader from './components/loader'
 import './css/not-found.css'
 
 export default function NotFound(){
+    useEffect(() => {
+        router.push('/login');
+    }, [])
     return(
-    <section className="sectionNotFound">
-        <h1 className="NotFound">404</h1>
-        <p className="NotFound">Page Not Found</p>
-    </section>
+        <Loader/>
     )
 }
