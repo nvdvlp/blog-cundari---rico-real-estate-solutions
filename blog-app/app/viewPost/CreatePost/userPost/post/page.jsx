@@ -67,6 +67,8 @@ export default function PostPage() {
             dangerouslySetInnerHTML={{ __html: postDetails.post_html }}
             style={{ whiteSpace: 'pre-wrap' }}
             />
+                    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+                    <script noModule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         </section>
     );
 }
