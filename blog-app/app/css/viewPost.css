@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 .viewPost {
+    min-width: calc(320px - 22px);
+    max-width: 100%;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-inline: 62px;
 }
 
 .viewPost__sectionTitle {
-    width: 1310px;
+    width: 100%;
     height: 90px;
     display: flex;
     flex-direction: row;
@@ -39,12 +42,13 @@
 }
 
 .viewPost__postContainer {
-    width: 1310px;
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 93px 46px;
+    grid-template-columns: repeat(auto-fit, minmax(618px, 1fr));
+    gap: 85px 30px;
     padding-block: 63px;
     position: relative;
+    justify-items: center;
 }
 
 .viewPost__post {
@@ -104,12 +108,107 @@
     font-weight:600;
     font-family:"Playfair Display";
     color:#212121;
-    margin-bottom: 23px;
+    margin-bottom: 18px;
+    line-height: 30px;
 }
 
 .viewPost__postContent {
     font-size:18px;
-    font-weight:600;
+    font-weight:500;
     color:#5E5C5C;
+    line-height: 20px;
+}
+
+.viewPost__post{
+    min-width: 618px !important;
+    max-width: 618px !important;
+}
+
+.truncated-text {
+    display: -webkit-box;        /* Required for webkit browsers */
+    -webkit-line-clamp: 2;       /* Limit to 2 lines */
+    -webkit-box-orient: vertical; /* Required for webkit browsers */
+    overflow: hidden;            /* Hide overflowing text */
+    text-overflow: ellipsis;     /* Add ellipsis (...) */
+    max-width: calc(392px - 44px);            /* Set the desired max width */
+    white-space: normal;         /* Allow wrapping to the next line */
+}
+
+.truncated-text-2 {
+    display: -webkit-box;        /* Required for webkit browsers */
+    -webkit-line-clamp: 2;       /* Limit to 2 lines */
+    -webkit-box-orient: vertical; /* Required for webkit browsers */
+    overflow: hidden;            /* Hide overflowing text */
+    text-overflow: ellipsis;     /* Add ellipsis (...) */
+    max-width: calc(392px - 44px);            /* Set the desired max width */
+    white-space: normal;         /* Allow wrapping to the next line */
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .viewPost{
+        padding-inline: 22px;
+    }    
+
+    .viewPost__post{
+        min-width: calc(320px - 44px) !important;
+        max-width: calc(320px - 44px) !important;
+        flex-direction: column;
+        overflow: hidden;
+        max-height: 378px;
+        height: fit-content;
+    }
+
+    .viewPost__imgPost{
+        min-width: calc(320px - 44px) !important;
+        max-width: calc(320px - 44px) !important;
+    }
+
+    .viewPost__postContainer{
+        grid-template-columns: repeat(auto-fit, minmax(276px, 1fr));
+        row-gap: 40px;
+        justify-items: center;
+    }
+
+    .viewPost__textContainer{
+        padding: 0;
+    }
+
+    .viewPost__title{
+        font-size: 28px;
+    }
+
+    .viewPost__postTitle{
+        margin-top: 10px;
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    .viewPost__postContent{
+        font-size: 12px;
+    }
+
+    .viewPost__postTitle {
+        margin-bottom: 15px;
+    }
+
+    .truncated-text {
+        display: -webkit-box;        /* Required for webkit browsers */
+        -webkit-line-clamp: 2;       /* Limit to 2 lines */
+        -webkit-box-orient: vertical; /* Required for webkit browsers */
+        overflow: hidden;            /* Hide overflowing text */
+        text-overflow: ellipsis;     /* Add ellipsis (...) */
+        max-width: calc(320px - 44px);            /* Set the desired max width */
+        white-space: normal;         /* Allow wrapping to the next line */
+    }
+
+    .truncated-text-2 {
+        display: -webkit-box;        /* Required for webkit browsers */
+        -webkit-line-clamp: 3;       /* Limit to 2 lines */
+        -webkit-box-orient: vertical; /* Required for webkit browsers */
+        overflow: hidden;            /* Hide overflowing text */
+        text-overflow: ellipsis;     /* Add ellipsis (...) */
+        max-width: calc(320px - 44px);            /* Set the desired max width */
+        white-space: normal;         /* Allow wrapping to the next line */
+    }
 }
 

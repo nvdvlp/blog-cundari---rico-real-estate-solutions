@@ -6,6 +6,7 @@ header {
     height:96px;
     border-bottom: 1px solid #B7B7B7;
     padding-inline: 62px;
+    position: relative;
 }
 
 
@@ -80,7 +81,24 @@ a {
 }
 
 .loginTextButton {
-    color: #fff;
+    color: #898080;
     font-size: 15px;
     font-weight: 500;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 110px;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    header{
+        padding-inline: 22px;
+    }    
+
+    .nameLogo{
+        width: 100%;
+    }
 }

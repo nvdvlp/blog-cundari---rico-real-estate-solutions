@@ -86,8 +86,8 @@ function ViewPost(){
                                 </Link>
                             </div>
                         <div className='viewPost__textContainer'>
-                            <h2 className='viewPost__postTitle'>{post.post_title}</h2>
-                            <h2 className='viewPost__postContent'>{post.post_desc}</h2>
+                            <h2 className='viewPost__postTitle truncated-text'>{post.post_title}</h2>
+                            <h2 className='viewPost__postContent truncated-text-2'>{post.post_desc}</h2>
                         </div>
                     </div>
                 ))}

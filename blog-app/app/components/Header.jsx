@@ -4,6 +4,8 @@ import Link from 'next/link';
 import '../css/Header.css';
 import Supabase from '../lib/supabaseClient';
 import { useRouter } from 'next/navigation'; 
+import Image from 'next/image';
+
 
 
 export default function Header(){
@@ -25,7 +27,12 @@ export default function Header(){
     return(
         <header>
             <div className='brandContainer'>
-                <div className='logo'></div>
+                <Image 
+                    src={`/static/logo.jpg`}     
+                    alt="Description of the image" 
+                    width={50} 
+                    height={50} 
+                />
                 <div className='nameLogo'>
                     <h2 className='cudariRico'>CUNDARI & RICO</h2>
                     <h2 className='realState'>REAL ESTATE SOLUTIONS</h2>    
@@ -48,14 +55,13 @@ export default function Header(){
                                 PROPERTIES
                             </Link>
                         </li> */}
-                        
-                    {pathname !== '/login' && (
+                </ul>
+            </nav>
+            {pathname !== '/login' && (
                         <button className='buttonLogin loginTextButton' onClick={logoutUser}>
                             Log Out
                         </button>
                     )}
-                </ul>
-            </nav>
         </header>
     )
 }   
