@@ -171,6 +171,10 @@
 
     .viewPost__textContainer{
         padding: 0;
+        border-bottom: 1px solid #CCCCCC;
+        border-inline: 1px solid #CCCCCC;
+        padding-inline: 10px;
+        padding-block: 5px;
     }
 
     .viewPost__title{
@@ -178,17 +182,14 @@
     }
 
     .viewPost__postTitle{
-        margin-top: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
         font-size: 20px;
         line-height: 20px;
     }
 
     .viewPost__postContent{
         font-size: 12px;
-    }
-
-    .viewPost__postTitle {
-        margin-bottom: 15px;
     }
 
     .truncated-text {
