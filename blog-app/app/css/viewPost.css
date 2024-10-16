@@ -45,7 +45,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(618px, 1fr));
-    gap: 85px 30px;
+    row-gap: 48px;
     padding-block: 63px;
     position: relative;
     justify-items: center;
@@ -100,23 +100,26 @@
 .viewPost__textContainer{
     display: flex;
     flex-direction: column;
-    padding-left:18px;
+    padding-inline: 15px;
+    padding-block: 10px;
+    border-block: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
 }
 
 .viewPost__postTitle {
-    font-size:31px;
+    font-size:25px;
     font-weight:600;
     font-family:"Playfair Display";
     color:#212121;
     margin-bottom: 18px;
-    line-height: 30px;
+    line-height: 24px;
 }
 
 .viewPost__postContent {
-    font-size:18px;
+    font-size:13px;
     font-weight:500;
     color:#5E5C5C;
-    line-height: 20px;
+    line-height: 15px;
 }
 
 .viewPost__post{
@@ -136,7 +139,7 @@
 
 .truncated-text-2 {
     display: -webkit-box;        /* Required for webkit browsers */
-    -webkit-line-clamp: 2;       /* Limit to 2 lines */
+    -webkit-line-clamp: 3;       /* Limit to 2 lines */
     -webkit-box-orient: vertical; /* Required for webkit browsers */
     overflow: hidden;            /* Hide overflowing text */
     text-overflow: ellipsis;     /* Add ellipsis (...) */
@@ -174,7 +177,7 @@
         border-bottom: 1px solid #CCCCCC;
         border-inline: 1px solid #CCCCCC;
         padding-inline: 10px;
-        padding-block: 5px;
+        padding-block: 5px; 
     }
 
     .viewPost__title{
