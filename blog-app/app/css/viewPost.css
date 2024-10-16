@@ -66,10 +66,11 @@
     left: 9px; 
     margin-top:7px;
     margin-left:9px;
-    width: 45px;
+    width: 55px;
     height: 22px;
     display: flex;
     justify-content: center;
+    align-items: center;
     border-radius:2px;
     flex-direction: row;
     background-color: rgba(255, 255, 255, 0.58); 

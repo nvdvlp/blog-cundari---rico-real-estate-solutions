@@ -5,6 +5,7 @@ import '../css/viewPost.css'
 import Link from 'next/link';
 import Supabase from '../lib/supabaseClient';
 import Loader from '../components/loader';
+import deletePost from '../lib/deletePost';
 
 function ViewPost(){
     const [posts, setPosts] = useState([]);
@@ -50,7 +51,16 @@ function ViewPost(){
 
         fetchPosts();
     }, []); 
-    
+    async function deletePostHandler(postId){
+        const { success, error } = await deletePost(postId)
+
+        if(error){
+            alert("ocurrio un error borrando el post")
+        } else if(success){
+            alert("Se eliminó el post exitosamente")
+            location.reload()
+        }
+    }
     if (loading) {
         return <Loader></Loader>
     }
@@ -74,16 +84,21 @@ function ViewPost(){
                             alt={post.post_title}
                             />
                             <div className='viewPost__iconsSection'>
-                                <ion-icon className='viewPost__create' name="create"></ion-icon>
-                                <Link href={`/viewPost/CreatePost/userPost/post`}>
+                                <ion-icon className='viewPost__create' name="create" onClick={() => {
+                                        localStorage.setItem('selectedPost', JSON.stringify(post))
+                                        router.push('editPost')
+                                    }}></ion-icon>
                                     <ion-icon 
                                     className='viewPost__link' 
                                     name="link"
                                     onClick={() => {
                                         localStorage.setItem('selectedPost', JSON.stringify(post))
+                                        router.push('/viewPost/CreatePost/userPost/post')
                                     }}
                                     ></ion-icon>
-                                </Link>
+                                <ion-icon name="trash" className='viewPost__link' onClick={() => {
+                                        deletePostHandler(post.post_id)
+                                    }}></ion-icon>
                             </div>
                         <div className='viewPost__textContainer'>
                             <h2 className='viewPost__postTitle truncated-text'>{post.post_title}</h2>
