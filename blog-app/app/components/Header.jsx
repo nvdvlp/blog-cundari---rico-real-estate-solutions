@@ -5,6 +5,7 @@ import '../css/Header.css';
 import Supabase from '../lib/supabaseClient';
 import { useRouter } from 'next/navigation'; 
 import Image from 'next/image';
+import stateImage from '../public/static/logo.jpg'
 
 
 
@@ -28,7 +29,7 @@ export default function Header(){
         <header>
             <div className='brandContainer'>
                 <Image 
-                    src={`/static/logo.jpg`}     
+                    src={`${stateImage.src}`}     
                     alt="Description of the image" 
                     width={50} 
                     height={50} 
