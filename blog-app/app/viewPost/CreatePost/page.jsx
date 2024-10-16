@@ -43,7 +43,6 @@ export default function CreatePost() {
     const [content, setContent] = useState('');
     const [draggedImage, setDraggedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Estado para cargar
-    const { addPost } = usePostContext(); 
     const router = useRouter(); 
 
     const  handleSavePost = async () => {
@@ -73,8 +72,6 @@ export default function CreatePost() {
                 facebook: 'your-facebook-link'
             }
         };
-        
-        addPost(newPost);
         const { successMessage, error } = await createPost(title, description, draggedImage, content)
 
         if(error){
