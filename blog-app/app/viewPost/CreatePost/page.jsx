@@ -2,11 +2,9 @@
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { usePostContext } from '../../context/context.jsx'; 
 import { useRouter } from 'next/navigation'; 
 import '../../css/CreatePost.css';
 import createPost from '@/app/lib/createPost.js';
-import Loader from '@/app/components/loader';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
