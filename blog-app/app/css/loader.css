@@ -21,7 +21,7 @@
     animation: rotation 1s linear infinite;
 }
 
-p{
+.p{
     margin-top: 10px;
     color: #252525;
     font-weight: 600;

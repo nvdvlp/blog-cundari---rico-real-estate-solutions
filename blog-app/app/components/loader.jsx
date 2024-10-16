@@ -2,9 +2,9 @@ import '../css/loader.css';
 
 export default function Loader() {
     return (
-        <section class='loaderContainer'>
-            <span class="loader"></span>   
-            <p>Cargando... </p>
+        <section className='loaderContainer'>
+            <span className="loader"></span>   
+            <p className='p'>Cargando... </p>
         </section>
     );
 }

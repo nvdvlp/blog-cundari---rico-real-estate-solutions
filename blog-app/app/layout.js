@@ -3,7 +3,6 @@ import './css/global.css'
 import { Inter } from 'next/font/google'
 //import components all components in layout
 import Header from './components/Header'
-import { PostProvider } from './context/context.jsx'; 
 
 export const metadata = {
   title: 'Cundari & Rico Real Estate Solutions',
@@ -18,7 +17,6 @@ export const metadata = {
 
 }
 
-//font Inter object
 const inter = Inter({
   weight:["300", "400", "500", "700"],
   styles:["italic", "normal"],
@@ -29,10 +27,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <PostProvider>
-          <Header />
-          {children}
-        </PostProvider>
+        <Header />
+        {children}
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script noModule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
       </body>
