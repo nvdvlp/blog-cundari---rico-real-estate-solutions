@@ -23,14 +23,16 @@ export default function PostPage() {
     }
 
     useEffect(() => {
-        const savedPost = localStorage.getItem('selectedPost');
-        if (savedPost) {
-            const post = JSON.parse(savedPost)
-            setPostDetails(post);
-
-            //build actual post url
-            const postPath = `${window.location.origin}/viewPost/CreatePost/userPost/post?postId=${post.post_id}`;
-            setPostURL(postPath);
+        if (typeof window !== 'undifined'){
+            const savedPost = localStorage.getItem('selectedPost');
+            if (savedPost) {
+                const post = JSON.parse(savedPost)
+                setPostDetails(post);
+    
+                //build actual post url
+                const postPath = `${window.location.origin}/viewPost/CreatePost/userPost/post?postId=${post.post_id}`;
+                setPostURL(postPath);
+            }
         }
     }, [router]);
 
