@@ -101,7 +101,11 @@ function ViewPost(){
                                     }}></ion-icon>
                             </div>
                         <div className='viewPost__textContainer'>
-                            <h2 className='viewPost__postTitle truncated-text'>{post.post_title}</h2>
+                            <h2 className='viewPost__postTitle truncated-text'
+                            onClick={() => {
+                                localStorage.setItem('selectedPost', JSON.stringify(post))
+                                router.push('/viewPost/CreatePost/userPost/post')
+                            }}>{post.post_title}</h2>
                             <h2 className='viewPost__postContent truncated-text-2'>{post.post_desc}</h2>
                         </div>
                     </div>
