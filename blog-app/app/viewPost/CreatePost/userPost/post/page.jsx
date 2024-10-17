@@ -23,7 +23,7 @@ export default function PostPage() {
     }
 
     useEffect(() => {
-        if (typeof window !== 'undifined'){
+        if (typeof window !== 'undefined'){
             const savedPost = localStorage.getItem('selectedPost');
             if (savedPost) {
                 const post = JSON.parse(savedPost)
