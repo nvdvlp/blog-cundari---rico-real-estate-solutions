@@ -6,13 +6,14 @@ import '../../../../css/post.css'
 
 export default function PostPage() {
     const router = useRouter();
-    
+    console.log(window.location.origin);
     const [postDetails, setPostDetails] = useState(null);
+    const [postURL, setPostURL] = useState('');
 
     const fecha = new Date(); 
     const day = fecha.getDate();      
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    const month = meses[fecha.getMonth()];  // `getMonth()` devuelve el mes en base 0, así que no hay necesidad de restar 1
+    const meses = ["January", "February", "March", "April", "May", "June", "Jule", "August", "September", "Octuber", "November", "December"];
+    const month = meses[fecha.getMonth()]; 
     const year = fecha.getFullYear();
 
     function stripHTML(html) {
@@ -24,9 +25,14 @@ export default function PostPage() {
     useEffect(() => {
         const savedPost = localStorage.getItem('selectedPost');
         if (savedPost) {
-            setPostDetails(JSON.parse(savedPost));
+            const post = JSON.parse(savedPost)
+            setPostDetails(post);
+
+            //build actual post url
+            const postPath = `${window.location.origin}/viewPost/CreatePost/userPost/post?postId=${post.post_id}`;
+            setPostURL(postPath);
         }
-    }, []);
+    }, [router]);
 
     if (!postDetails) {
         return <Loader></Loader>
@@ -42,19 +48,35 @@ export default function PostPage() {
             <div class='post__socialDateContainer'>
                 <p class='socialDateContainer__date'>{`${month} ${day}, ${year}`}</p>
                 <div class='socialDateContainer__socialMediaContainer'>
-                <a href="https://api.whatsapp.com/send?text=¡Mira este sitio increíble! https://tusitio.com" target="_blank">
-                    <ion-icon name="logo-whatsapp" class='mediaIcon'></ion-icon>
-                </a>
-                <a href="https://twitter.com/intent/tweet?url=https://tusitio.com&text=¡Mira este sitio increíble!" target="_blank">
-                    <ion-icon name="logo-twitter" class='mediaIcon'></ion-icon>
-                </a>
-                <a href="https://www.instagram.com" target="_blank">
-                    <ion-icon name="logo-instagram" class='mediaIcon'></ion-icon>
-                </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=https://tusitio.com" target="_blank">
-                    <ion-icon name="logo-facebook" class='mediaIcon'></ion-icon>
-                </a>
-            </div>
+                    {/* Link para compartir en WhatsApp */}
+                    <a 
+                        href={`https://api.whatsapp.com/send?text=¡Mira este post increíble! ${postURL}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                        <ion-icon name="logo-whatsapp" className='mediaIcon'></ion-icon>
+                    </a>
+
+                    {/* Link para compartir en Twitter */}
+                    <a 
+                        href={`https://twitter.com/intent/tweet?url=${postURL}&text=¡Mira este post increíble!`} 
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                        <ion-icon name="logo-twitter" className='mediaIcon'></ion-icon>
+                    </a>
+
+                    {/* Link para compartir en Facebook */}
+                    <a 
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${postURL}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                        <ion-icon name="logo-facebook" className='mediaIcon'></ion-icon>
+                    </a>
+
+                    {/* Instagram no permite compartir directamente enlaces, por lo que no hay URL */}
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                        <ion-icon name="logo-instagram" className='mediaIcon'></ion-icon>
+                    </a>
+                </div>
             </div>
 
             <img
@@ -63,9 +85,9 @@ export default function PostPage() {
                 alt={postDetails.post_title}
             />
             <div
-            className="post__infoPost"
-            dangerouslySetInnerHTML={{ __html: postDetails.post_html }}
-            style={{ whiteSpace: 'pre-wrap' }}
+                className="post__infoPost"
+                dangerouslySetInnerHTML={{ __html: postDetails.post_html }}
+                style={{ whiteSpace: 'pre-wrap' }}
             />
         </section>
     );
