@@ -58,11 +58,11 @@ export default function Header(){
                         </li> */}
                 </ul>
             </nav>
-            {pathname !== '/login' && (
+            {/* {pathname !== '/login' && (
                         <button className='buttonLogin loginTextButton' onClick={logoutUser}>
                             Log Out
                         </button>
-                    )}
+                    )} */}
         </header>
     )
 }   
