@@ -1,9 +1,9 @@
 'use client';
+import './EditPost.css';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
-import '../css/EditPost.css';
 import createPost from '@/app/lib/createPost.js';
 import { useEffect } from 'react';
 import updatePost from '../lib/updatePost';

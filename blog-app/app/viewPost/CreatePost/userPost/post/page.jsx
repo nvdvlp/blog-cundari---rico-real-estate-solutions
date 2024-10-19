@@ -1,8 +1,9 @@
+// post
 'use client';
+import './post.css'
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Loader from '@/app/components/loader';
-import '../../../../css/post.css'
 
 export default function PostPage() {
     const router = useRouter();

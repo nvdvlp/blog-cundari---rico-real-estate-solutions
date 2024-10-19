@@ -1,16 +1,15 @@
 'use client'
+import './login.css'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './login.css'
 import Supabase from '../lib/supabaseClient';
 import { useEffect } from 'react';
 
 const Login = () => {
+  let user;
   const router = useRouter();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  let user;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {

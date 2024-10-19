@@ -1,9 +1,10 @@
+// createPost
 'use client';
+import './CreatePost.css';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
-import '../../css/CreatePost.css';
 import createPost from '@/app/lib/createPost.js';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });

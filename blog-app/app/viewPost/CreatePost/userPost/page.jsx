@@ -1,6 +1,6 @@
+// userPost
 'use client';
-import Link from "next/link"
-import '../../../css/userPost.css'
+import './userPost.css'
 
 export default async function UserPost(){
 

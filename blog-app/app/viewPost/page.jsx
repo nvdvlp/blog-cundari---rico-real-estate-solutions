@@ -1,8 +1,10 @@
+// viewPost
+
 'use client'
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import '../css/viewPost.css'
+import './viewPost.css'
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Supabase from '../lib/supabaseClient';
 import Loader from '../components/loader';
 import deletePost from '../lib/deletePost';

@@ -1,13 +1,12 @@
+// Header jsx
 'use client'; 
+import './Header.css';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation'; 
 import Link from 'next/link';
-import '../css/Header.css';
 import Supabase from '../lib/supabaseClient';
 import { useRouter } from 'next/navigation'; 
-import Image from 'next/image';
 import stateImage from '../public/static/logo.jpg'
-
-
 
 export default function Header(){
     const pathname = usePathname(); 
@@ -16,14 +15,13 @@ export default function Header(){
     async function logoutUser() {
         const { error } = await Supabase.auth.signOut();
         localStorage.removeItem('authID')
-      
-        if (error) {
-          console.error('Error signing out:', error.message);
-        } else {
-          console.log('Successfully signed out');
-          router.push('/login')
+            if (error) {
+                console.error('Error signing out:', error.message);
+            } else {
+                console.log('Successfully signed out');
+                router.push('/login')
+            }
         }
-      }
 
     return(
         <header>
