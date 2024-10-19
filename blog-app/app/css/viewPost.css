@@ -114,6 +114,7 @@
     color:#212121;
     margin-bottom: 18px;
     line-height: 24px;
+    cursor: pointer;
 }
 
 .viewPost__postContent {
