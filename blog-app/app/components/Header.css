@@ -79,6 +79,7 @@ a {
     border-radius: 5px;
     border-style: none;
     background-color: #212121;
+    cursor: pointer;
 }
 
 .loginTextButton {
