@@ -35,10 +35,10 @@ export default function PostPage() {
                 console.error('No post found in localStorage.');
             }
         }
-        setLoading(false); //
+        setLoading(false); 
     }, [id]);
     
-    if (!postDetails) {
+    if (loading) {
         return <Loader />;
     }
 
