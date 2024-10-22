@@ -22,7 +22,8 @@ export default function PostPage() {
 
     useEffect(() => {
         const fetchPostDetails = async () => {
-
+            if (!id) return; 
+            
             const { data, error } = await Supabase
             .from('Posts') 
             .select('*')
