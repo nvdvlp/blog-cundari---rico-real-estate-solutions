@@ -29,7 +29,7 @@ export default function PostPage() {
                 console.log(post.post_id == id);
                 if(post.post_id == id) {
                     setPostDetails(post);
-                    const postPath = `${window.location.origin}/viewPost/CreatePost/userPost/post/${id}`;
+                    const postPath = `${window.location.origin}/post/${post.post_id}`;
                     setPostURL(postPath);
                 }
             }
