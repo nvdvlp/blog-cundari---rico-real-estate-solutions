@@ -34,7 +34,7 @@ export default function PostPage() {
                 }
             }
         }
-    }, []);
+    }, [id]);
     
     if (!postDetails) {
         return <Loader />;

@@ -12,8 +12,9 @@ export default function NotFound(){
 
     return(
         
-        <div className="sectionNotFound">
-            <h1 className='loginRedirect'>Redirecting to Login...</h1>
-        </div>
+        <section className='loaderContainer'>
+            <span className="loader"></span>   
+            <p className='p'>Cargando... </p>
+        </section>
     )
 }
