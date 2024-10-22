@@ -217,3 +217,9 @@
         font-size:10px;
     }
 }
+
+.post__infoPost img[src^="data:image"] {
+    width: 990px;
+    height: auto; /* Mantener la proporción */
+    /* Otros estilos que desees aplicar */
+}

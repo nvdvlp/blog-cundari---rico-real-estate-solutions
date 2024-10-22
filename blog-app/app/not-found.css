@@ -1,4 +1,4 @@
-/* .sectionNotFound {
+.sectionNotFound {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,7 +7,8 @@
     height: 100vh;
 }
 
-.NotFound {
-    font-size:50px;
+.loginRedirect {
+    font-size:40px;
+    font-weight: 500;
     margin: 0;
-}  */
+} 

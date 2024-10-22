@@ -1,17 +1,23 @@
-// createPost
 'use client';
-import './CreatePost.css';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
+import './CreatePost.css';
 import createPost from '@/app/lib/createPost.js';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
+const fontOptions = [
+    { label: 'Roboto', value: 'roboto' },
+    { label: 'Open Sans', value: 'open-sans' },
+    { label: 'Arial', value: 'arial' },
+    { label: 'Verdana', value: 'verdana' },
+];
+
 const modules = {
     toolbar: [
-        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': fontOptions.map(font => font.value) }],
         [{ size: [] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
@@ -19,6 +25,7 @@ const modules = {
         ['clean']
     ],
 };
+
 
 const formats = [
     'header',
@@ -136,6 +143,7 @@ export default function CreatePost() {
             <h2 className='createPost__title'>Create Post</h2>
     
             <div className='createPost__informationContainer'>
+            <div className='createPost__imgDropContainer'>
                 <div 
                     className='informationContainer__dragAndDropZone'
                     onDragOver={(e) => e.preventDefault()}
@@ -163,6 +171,18 @@ export default function CreatePost() {
                         </>
                     )}
                 </div>
+                <div className="removeImageButtonContainer">
+                        <button className='removeImageButtonContainer__removeImageButton'
+                                            onClick={() => {
+                                                setDraggedImage(null); 
+                                                document.getElementById('imageInput').value = ''; 
+                                            }} 
+                        >
+                            <p className='removeImageButton__text'>remove loaded image</p>
+                            <ion-icon class='removeImageButton__trashIcon' name="trash-outline"></ion-icon>
+                        </button>
+                </div>
+            </div>
 
                 <div className='informationContainer__inputContainer'>
                     <h2 className='inputContainer__textInputPost'>Title</h2>
@@ -180,14 +200,16 @@ export default function CreatePost() {
                     </textarea>
                 </div>
             </div>
-            
+
+
             <ReactQuill 
-                className='reactQuill' 
+                class='quill' 
                 value={content}
                 onChange={setContent}
                 modules={modules}
                 formats={formats} 
             />
+
 
             <div className='createPost__buttonContainer'>
                 <button className='buttonContainer__createPostButton' onClick={handleSavePost} style={{ marginTop: '10px' }}>

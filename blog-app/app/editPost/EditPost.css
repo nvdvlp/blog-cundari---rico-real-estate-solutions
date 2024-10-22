@@ -25,6 +25,11 @@
     margin-bottom:42px;
 }
 
+.createPost__imgDropContainer{
+    display: flex;
+    flex-direction: column;
+}
+
 .informationContainer__dragAndDropZone {
     width: 640px;
     height: 360px;
@@ -102,6 +107,38 @@ input {
     margin-bottom: 12px;
 }
 
+.removeImageButtonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.removeImageButtonContainer__removeImageButton {
+    width: 200px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    border-style: none;
+    background-color: #212121;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.removeImageButton__text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.removeImageButton__trashIcon {
+    font-size: 15px;
+    color: #fff;
+}
+
 .inputContainer__size2 {
     border-radius:8px;
     background-color: #F7F7F7;
@@ -114,13 +151,9 @@ input {
     resize: none;
 }
 
-.quill  {
-    width:1316px;
-    height:277px;
-}
-
 .createPost__buttonContainer{
     margin-top:68px;
+    padding-bottom:50px;
 }
 
 .buttonContainer__createPostButton{
@@ -152,3 +185,315 @@ input {
     display: none; 
 }
 
+/* .ql-editor img {
+    display: block; 
+    margin: 0 auto; 
+} */
+
+@media (min-width: 768px ) and (max-width: 1440px) {
+    .createPost__title{
+        font-size:30px;
+        width: 646px;
+        margin-bottom: 20px;
+    }
+    
+    .createPost__informationContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .informationContainer__dragAndDropZone {
+        width: 646px;
+        height: 370px;
+        margin-bottom: 20px;
+    }
+
+    .informationContainer__imgFolderContainer {
+        margin-top: 83px;
+        margin-bottom: 87px;
+    }
+
+    .imgFolderContainer__imgIcon{
+        font-size: 78px;
+    }
+    
+    .imgFolderContainer__dropText {
+        margin-bottom: 15px;
+        font-size:21px;
+    }
+    
+    .imgFolderContainer__uploadButton {
+        width: 121px;
+        height: 32px;
+        font-size: 15px;
+    }
+
+    .imgFolderContainer__warningMessage {
+        font-size:14px;
+    }
+
+    .informationContainer__inputContainer {
+        display: flex;
+        flex-direction: column;
+        padding-left:0px;
+    }
+    
+    .inputContainer__textInputPost {
+        font-size:21px;
+        margin-bottom:12px;
+    }
+    
+    input {
+        width: 646px;
+    }
+    
+    .inputContainer__size1 {
+        height:34px;
+        margin-bottom: 12px;
+    }
+    
+    .inputContainer__size2 {
+        width: 646px;
+    }
+
+    .quill  {
+        width: 646px;
+    }
+    
+    .createPost__buttonContainer{
+        padding-top:42px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .buttonContainer__createPostButton{
+        width:234px;
+        height:49px;
+        font-size:19px;
+
+    }
+    
+    .buttonContainer__cancelPostButton{
+        width:234px;
+        height:49px;
+        font-size:16px;
+    }
+
+
+    .createPost__buttonContainer {
+        margin-bottom: 0px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+    .createPost {
+        padding: 0px;
+    }
+    
+    .createPost__title{
+        margin-bottom: 20px;
+        font-size:30px;
+        width: 430px;
+    }
+    
+    .createPost__informationContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .informationContainer__dragAndDropZone {
+        width: 430px;
+        height: 270px;
+    }
+
+    .informationContainer__imgFolderContainer {
+        margin-bottom: 46px;
+    }
+
+    .imgFolderContainer__imgIcon{
+        font-size: 53px;
+        color: #636363;
+    }
+    
+    .imgFolderContainer__dropText {
+        color:#636363;
+        font-size:17px;
+        font-weight: 600;
+    }
+    
+    .imgFolderContainer__uploadButton {
+        width: 110px;
+        height: 26px;
+        font-size: 13px;
+    }
+
+    .imgFolderContainer__warningMessage {
+        font-size:11px;
+    }
+
+    .informationContainer__inputContainer {
+        display: flex;
+        flex-direction: column;
+        padding-left:0px;
+    }
+    
+    .inputContainer__textInputPost {
+        font-size:16px;
+        margin-bottom:12px;
+    }
+    
+    input {
+        width: 430px;
+    }
+    
+    .inputContainer__size1 {
+        height:34px;
+        margin-bottom: 12px;
+    }
+    
+    .inputContainer__size2 {
+        width: 430px;
+    }
+
+    .quill  {
+        width: 430px;
+    }
+    
+    .createPost__buttonContainer{
+        padding-top:42px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .buttonContainer__createPostButton{
+        width:200px;
+        height:49px;
+        font-size:15px;
+
+    }
+    
+    .buttonContainer__cancelPostButton{
+        width:200px;
+        height:49px;
+        font-size:12px;
+    }
+
+    .createPost__buttonContainer {
+        margin-bottom: 0px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+    .createPost {
+        padding: 0px;
+    }
+    
+    .createPost__title{
+        margin-bottom: 20px;
+        font-size:26px;
+        width:295px;
+    }
+    
+    .createPost__informationContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .informationContainer__dragAndDropZone {
+        width: 290px;
+        height: 230px;
+    }
+
+    .informationContainer__imgFolderContainer {
+        margin-bottom: 20px;
+    }
+
+    .imgFolderContainer__imgIcon{
+        font-size: 42px;
+        color: #636363;
+    }
+    
+    .imgFolderContainer__dropText {
+        color:#636363;
+        font-size:15px;
+        font-weight: 600;
+    }
+    
+    .imgFolderContainer__uploadButton {
+        width: 110px;
+        height: 26px;
+        font-size: 10px;
+    }
+
+    .imgFolderContainer__warningMessage {
+        font-size:8px;
+    }
+
+    .informationContainer__inputContainer {
+        display: flex;
+        flex-direction: column;
+        padding-left:0px;
+    }
+    
+    .inputContainer__textInputPost {
+        font-size:12px;
+        margin-bottom:12px;
+    }
+    
+    input {
+        width:290px;
+    }
+    
+    .inputContainer__size1 {
+        height:34px;
+        margin-bottom: 12px;
+    }
+    
+    .inputContainer__size2 {
+        width:290px;
+    }
+
+    .quill  {
+        width:290px;
+    }
+    
+    .createPost__buttonContainer{
+        padding-top:42px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .buttonContainer__createPostButton{
+        width:200px;
+        height:49px;
+        font-size:15px;
+
+    }
+    
+    .buttonContainer__cancelPostButton{
+        width:200px;
+        height:49px;
+        font-size:12px;
+    }
+    .createPost__buttonContainer {
+        margin-bottom: 0px;
+    }
+}
+
+.ql-editor img {
+    max-width: 100%; /* Ajusta el ancho máximo de la imagen al contenedor */
+    height: auto;    /* Mantiene la proporción de la imagen */
+    display: block;  /* Centra la imagen si tiene espacio alrededor */
+    margin: 0 auto;  /* Centra la imagen horizontalmente */
+    object-fit: contain; /* Asegura que la imagen no se deforme */
+    max-height: 500px; /* Establece una altura máxima opcional */
+}

@@ -11,6 +11,7 @@ import stateImage from '../public/static/logo.jpg'
 export default function Header(){
     const pathname = usePathname(); 
     const router = useRouter(); 
+    const paths = ['/post', '/createPost', '/editPost'];
 
     async function logoutUser() {
         const { error } = await Supabase.auth.signOut();
@@ -39,8 +40,8 @@ export default function Header(){
             </div>
             <nav>
                 <ul>
-                    <li className={pathname.includes('/viewPost') ? 'active' : ''}>
-                        <Link href="/viewPost" className="header__link">
+                    <li className={paths.some(path => pathname.includes(path)) ? 'active' : ''}>
+                        <Link href="/post" className="header__link">
                             BLOG
                         </Link>
                     </li>

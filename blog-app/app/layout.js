@@ -1,22 +1,26 @@
+
+'use client'
+
 import './css/global.css'
-//import fonts
 import { Inter } from 'next/font/google'
-//import components all components in layout
 import Header from './components/Header'
 import Script from 'next/script';
+import Loader from './components/Loader';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export const metadata = {
-  title: 'Cundari & Rico Real Estate Solutions',
-  description: 'Search available properties for sale or lease',
-  keywords: [
-    'Homes for rent',
-    'Real estate market trends',
-    'Commercial properties for sale',
-    'Real estate agent services',
-    'Property management services'
-  ]
 
-}
+// export const metadata = {
+//   title: 'Cundari & Rico Real Estate Solutions',
+//   description: 'Search available properties for sale or lease',
+//   keywords: [
+//     'Homes for rent',
+//     'Real estate market trends',
+//     'Commercial properties for sale',
+//     'Real estate agent services',
+//     'Property management services'
+//   ]
+// }
 
 const inter = Inter({
   weight:["300", "400", "500", "700"],
@@ -25,8 +29,31 @@ const inter = Inter({
 })
 
 export default function RootLayout({ children }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('authID'); 
+    if (token) {
+      setIsAuthenticated(true); 
+    } else {
+      if (router.pathname !== '/login') {
+        router.push('/login'); // Redirige a login si no está autenticado y no está en la página de login
+      }
+    }
+    setLoading(false); 
+  }, [router]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <html lang="en">
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+      </head>
       <body className={inter.className}>
         <Header />
         {children}
@@ -34,10 +61,8 @@ export default function RootLayout({ children }) {
           type="module"
           src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
           crossOrigin="anonymous"
-          strategy="afterInteractive" // Load before the interactive part
+          strategy="afterInteractive"
         />
-
-        {/* Fallback for older browsers */}
         <Script
           noModule
           src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"

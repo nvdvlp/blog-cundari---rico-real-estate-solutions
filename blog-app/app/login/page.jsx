@@ -15,7 +15,7 @@ const Login = () => {
   useEffect(() => {
       const token = localStorage.getItem('authID'); // O sessionStorage, según tu autenticación
       if (token) {
-          router.push('/viewPost'); // Redirige a login si no está autenticado
+          router.push('/login'); // Redirige a login si no está autenticado
       } else {
           setIsAuthenticated(true);
       }
@@ -30,7 +30,7 @@ const Login = () => {
     console.log("user")
     console.log(user)
     localStorage.setItem('authID', btoa(user.id))
-    router.push('/viewPost');
+    router.push('/post');
   };
 
   async function loginUser(email, password) {
