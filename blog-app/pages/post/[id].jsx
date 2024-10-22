@@ -11,6 +11,7 @@ export default function PostPage() {
     const { id } = router.query;
     const [postDetails, setPostDetails] = useState(null);
     const [postURL, setPostURL] = useState('');
+    const [loading, setLoading] = useState(true); 
 
     const fecha = new Date(); 
     const day = fecha.getDate();      
@@ -19,25 +20,30 @@ export default function PostPage() {
     const year = fecha.getFullYear();
 
     useEffect(() => {
-        console.log('Router query:', router.query);
-        if (typeof window !== 'undefined' && id) {
-            console.log('ID desde router.query:', id); 
+        if (id) {
             const savedPost = localStorage.getItem('selectedPost');
-            console.log(savedPost)
             if (savedPost) {
                 const post = JSON.parse(savedPost);
-                console.log(post.post_id == id);
-                if(post.post_id == id) {
+                if (post.post_id === id) {
                     setPostDetails(post);
                     const postPath = `${window.location.origin}/post/${post.post_id}`;
                     setPostURL(postPath);
+                } else {
+                    console.error('Post not found for the provided ID:', id);
                 }
+            } else {
+                console.error('No post found in localStorage.');
             }
         }
+        setLoading(false); //
     }, [id]);
     
     if (!postDetails) {
         return <Loader />;
+    }
+
+    if (postDetails === null && id) {
+        return <p>The post is not found</p>;
     }
 
     return (
