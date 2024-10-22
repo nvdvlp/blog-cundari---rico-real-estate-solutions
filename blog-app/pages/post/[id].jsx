@@ -1,6 +1,7 @@
 // post
 'use client';
 import './post.css'
+import '../../app/css/global.css'
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Loader from '@/app/components/loader';

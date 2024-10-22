@@ -105,6 +105,8 @@
 
     .post__img {
         width: 990px;
+        padding-bottom: 50px;
+        border-bottom: 1px solid #B7B7B7;
     }
 
     .post__infoPost {
@@ -139,6 +141,8 @@
     }
 
     .post__img {
+        padding-bottom: 50px;
+        border-bottom: 1px solid #B7B7B7;
         width: 726px;
     }
 
@@ -175,6 +179,8 @@
     }
 
     .post__img {
+        padding-bottom: 50px;
+        border-bottom: 1px solid #B7B7B7;
         width: 420px;
     }
 
@@ -211,6 +217,8 @@
     }
 
     .post__img {
+        padding-bottom: 50px;
+        border-bottom: 1px solid #B7B7B7;
         width:295px;
     }
 
