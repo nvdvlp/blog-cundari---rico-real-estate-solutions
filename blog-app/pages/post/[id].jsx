@@ -5,12 +5,14 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Loader from '@/app/components/loader';
 import Header from '../../app/components/Header';
+import Supabase from '@/app/lib/supabaseClient';
 
 export default function PostPage() {
     const router = useRouter();
     const { id } = router.query;
     const [postDetails, setPostDetails] = useState(null);
     const [postURL, setPostURL] = useState('');
+    const [loading, setLoading] = useState(true); // Estado para gestionar la carga
 
     const fecha = new Date(); 
     const day = fecha.getDate();      
@@ -19,29 +21,38 @@ export default function PostPage() {
     const year = fecha.getFullYear();
 
     useEffect(() => {
-        console.log('Router query:', router.query);
-        if (typeof window !== 'undefined' && id) {
-            console.log('ID desde router.query:', id); 
-            const savedPost = localStorage.getItem('selectedPost');
-            console.log(savedPost)
-            if (savedPost) {
-                const post = JSON.parse(savedPost);
-                console.log(post.post_id == id);
-                if(post.post_id == id) {
-                    setPostDetails(post);
-                    const postPath = `${window.location.origin}/post/${post.post_id}`;
-                    setPostURL(postPath);
-                }
+        const fetchPostDetails = async () => {
+
+            const { data, error } = await Supabase
+            .from('Posts') 
+            .select('*')
+            .eq('post_id', id) 
+            .single(); 
+
+            if (error) {
+                console.error('Error fetching post:', error);
+                setLoading(false);
+                return; 
             }
+
+            if (data) {
+                setPostDetails(data);
+                const postPath = `${window.location.origin}/post/${data.post_id}`;
+                setPostURL(postPath);
+            } else {
+                console.error('No post found for the provided ID:', id);
+            }
+            setLoading(false); 
         }
+        fetchPostDetails();
     }, [id]);
     
-    if (!postDetails) {
+    if (loading) {
         return <Loader />;
     }
 
-    if (postDetails === null && id) {
-        return <p>The post is not found</p>;
+    if (!postDetails) {
+        return <p>The post is not found.</p>;
     }
 
     return (
