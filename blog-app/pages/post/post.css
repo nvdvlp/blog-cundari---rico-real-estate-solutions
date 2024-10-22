@@ -65,7 +65,7 @@
     max-height: 738px;
     min-height: 738px; */
     width: 1312px;
-    height: 739px;
+    height: auto;
 }
 
 .post__infoPost {
@@ -142,6 +142,7 @@
         width: 726px;
     }
 
+
     .post__infoPost {
         width: 726px;
         font-size:19px;
@@ -176,6 +177,7 @@
     .post__img {
         width: 420px;
     }
+
 
     .post__infoPost {
         width: 420px;
@@ -219,7 +221,36 @@
 }
 
 .post__infoPost img[src^="data:image"] {
-    width: 990px;
-    height: auto; /* Mantener la proporción */
-    /* Otros estilos que desees aplicar */
+    margin-block:20px;
+    max-width: 100%; 
+    width: 1312px;
+    height: auto; 
+}
+
+@media (min-width: 1024px ) and (max-width: 1439px) {
+    /* ... otros estilos ... */
+    .post__infoPost img[src^="data:image"] {
+        width: 990px; /* Ajuste específico para este rango */
+    }
+}
+
+@media (min-width: 768px ) and (max-width: 1023px) {
+    /* ... otros estilos ... */
+    .post__infoPost img[src^="data:image"] {
+        width: 726px; /* Ajuste específico para este rango */
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    /* ... otros estilos ... */
+    .post__infoPost img[src^="data:image"] {
+        width: 420px; /* Ajuste específico para este rango */
+    }
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+    /* ... otros estilos ... */
+    .post__infoPost img[src^="data:image"] {
+        width: 295px; /* Ajuste específico para este rango */
+    }
 }
