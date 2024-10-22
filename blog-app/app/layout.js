@@ -5,7 +5,7 @@ import './css/global.css'
 import { Inter } from 'next/font/google'
 import Header from './components/Header'
 import Script from 'next/script';
-import Loader from './components/Loader';
+import Loader from './components/loader';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
