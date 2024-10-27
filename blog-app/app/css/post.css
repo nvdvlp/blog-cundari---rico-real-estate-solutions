@@ -51,11 +51,21 @@
     width: 150px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-end;
+    align-items: center
 }
 
 .mediaIcon {
     font-size:24px;
+    color: #615F5F;
+}
+
+.linkMedia {
+    margin-right:28px;
+}
+
+.editPost {
+    font-size: 24px;
     color: #615F5F;
 }
 

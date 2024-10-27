@@ -1,10 +1,19 @@
 'use client';
 import 'react-quill/dist/quill.snow.css';
+<<<<<<< Updated upstream:blog-app/app/viewPost/CreatePost/page.jsx
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import '../../css/CreatePost.css';
+=======
+import './CreatePost.css';
+import dynamic from 'next/dynamic';
+>>>>>>> Stashed changes:blog-app/app/createPost/page.jsx
 import createPost from '@/app/lib/createPost.js';
+import updateDisplayName from '@/app/lib/updateDisplayName';
+import { useState, useEffect } from 'react';
+import { createClient } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation'; 
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -36,12 +45,57 @@ const formats = [
 
 // Agregar post
 export default function CreatePost() {
+    const router = useRouter(); 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [draggedImage, setDraggedImage] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); // Estado para cargar
-    const router = useRouter(); 
+    const [displayName, setDisplayName] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [posts, setPosts] = useState([]);
+    const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
+    );
+
+        //fecha post
+        const post = JSON.parse(localStorage.getItem('selectedPost'));
+        const createdAt = new Date(post.created_at).toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+        });
+
+    useEffect(() => {
+        async function fetchDisplayName() {
+            const userId = 'a5f3ed09-60e3-4454-884c-1541fe11920a'; // UID del usuario
+            const newDisplayName = 'Guillermo Rico'; // nombre del usuario
+            const result = await updateDisplayName(userId, newDisplayName);
+            
+            if (!result.error) {
+                setDisplayName(newDisplayName); 
+                console.log(result.successMessage);
+            } else {
+                console.error(result.error);
+            }
+        }
+    
+        async function fetchPosts() {
+            const { data, error } = await supabase
+                .from('Posts')
+                .select('*') 
+                .order('created_at', { ascending: false }); 
+    
+            if (error) {
+                console.error('Error fetching posts:', error);
+            } else {
+                setPosts(data);
+            }
+            setLoading(false);
+        }
+    
+        fetchDisplayName();
+        fetchPosts();
+    }, []);
 
     const  handleSavePost = async () => {
         if (!title.trim()) {
@@ -81,7 +135,7 @@ export default function CreatePost() {
             setDescription('');
             setContent('');
             setDraggedImage(null);
-            router.push('/viewPost')
+            router.push('/post')
         }
     };
 
@@ -133,8 +187,19 @@ export default function CreatePost() {
     return (
         <section className='createPost'>
             <h2 className='createPost__title'>Create Post</h2>
-    
+            <button className='removeImageButtonContainer__removeImageButton'
+                onClick={() => {
+                    setDraggedImage(null); 
+                    document.getElementById('imageInput').value = ''; 
+                }}>
+                <ion-icon class='removeImageButton__trashIcon' name="trash-outline"></ion-icon>
+                </button>
             <div className='createPost__informationContainer'>
+<<<<<<< Updated upstream:blog-app/app/viewPost/CreatePost/page.jsx
+=======
+                
+            <div className='createPost__imgDropContainer'>
+>>>>>>> Stashed changes:blog-app/app/createPost/page.jsx
                 <div 
                     className='informationContainer__dragAndDropZone'
                     onDragOver={(e) => e.preventDefault()}
@@ -162,6 +227,10 @@ export default function CreatePost() {
                         </>
                     )}
                 </div>
+<<<<<<< Updated upstream:blog-app/app/viewPost/CreatePost/page.jsx
+=======
+            </div>
+>>>>>>> Stashed changes:blog-app/app/createPost/page.jsx
 
                 <div className='informationContainer__inputContainer'>
                     <h2 className='inputContainer__textInputPost'>Title</h2>
@@ -188,6 +257,12 @@ export default function CreatePost() {
                 formats={formats} 
             />
 
+<<<<<<< Updated upstream:blog-app/app/viewPost/CreatePost/page.jsx
+=======
+            <h2>written by {displayName}</h2> 
+            <p>Created on: {createdAt}</p>
+
+>>>>>>> Stashed changes:blog-app/app/createPost/page.jsx
             <div className='createPost__buttonContainer'>
                 <button className='buttonContainer__createPostButton' onClick={handleSavePost} style={{ marginTop: '10px' }}>
                     Create Post

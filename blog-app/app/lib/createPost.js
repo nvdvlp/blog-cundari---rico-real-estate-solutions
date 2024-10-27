@@ -9,6 +9,8 @@ export default async function createPost(post_title, post_desc, post_banner_img_
     return;
   }
 
+  const displayName = user.user_metadata?.displayName || "Usuario";
+
   // Step 2: Insert the post into the posts table, connected with user_uuid
   const { data, error } = await Supabase
     .from('Posts')

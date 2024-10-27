@@ -2,7 +2,13 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Loader from '@/app/components/loader';
+<<<<<<< Updated upstream:blog-app/app/viewPost/CreatePost/userPost/post/page.jsx
 import '../../../../css/post.css'
+=======
+import Header from '../../app/components/Header';
+import Supabase from '@/app/lib/supabaseClient';
+import Link from 'next/link';
+>>>>>>> Stashed changes:blog-app/pages/post/[id].jsx
 
 export default function PostPage() {
     const router = useRouter();
@@ -50,29 +56,38 @@ export default function PostPage() {
                 <p className='socialDateContainer__date'>{`${month} ${day}, ${year}`}</p>
                 <div className='socialDateContainer__socialMediaContainer'>
                     <a 
-                        href={`https://api.whatsapp.com/send?text=¡Mira este post increíble! ${postURL}`} 
+                        class='linkMedia'
+                        href={`https://api.whatsapp.com/send?text=¡Check out this amazing post! ${postURL}`} 
                         target="_blank" 
                         rel="noopener noreferrer">
                         <ion-icon name="logo-whatsapp" className='mediaIcon'></ion-icon>
                     </a>
 
                     <a 
-                        href={`https://twitter.com/intent/tweet?url=${postURL}&text=¡Mira este post increíble!`} 
+                        class='linkMedia'
+                        href={`https://twitter.com/intent/tweet?url=${postURL}&text=¡Check out this amazing post!`} 
                         target="_blank" 
                         rel="noopener noreferrer">
                         <ion-icon name="logo-twitter" className='mediaIcon'></ion-icon>
                     </a>
 
                     <a 
+                        class='linkMedia'
                         href={`https://www.facebook.com/sharer/sharer.php?u=${postURL}`} 
                         target="_blank" 
                         rel="noopener noreferrer">
                         <ion-icon name="logo-facebook" className='mediaIcon'></ion-icon>
                     </a>
 
+<<<<<<< Updated upstream:blog-app/app/viewPost/CreatePost/userPost/post/page.jsx
                     <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
                         <ion-icon name="logo-instagram" className='mediaIcon'></ion-icon>
                     </a>
+=======
+                    <Link href='/editPost'>
+                        <ion-icon  class='editPost' name="create-outline"></ion-icon>
+                    </Link>
+>>>>>>> Stashed changes:blog-app/pages/post/[id].jsx
                 </div>
             </div>
 

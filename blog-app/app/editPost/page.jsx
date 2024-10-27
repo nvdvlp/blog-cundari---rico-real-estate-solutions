@@ -1,12 +1,20 @@
 'use client';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
+<<<<<<< Updated upstream
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import '../css/EditPost.css';
 import createPost from '@/app/lib/createPost.js';
 import { useEffect } from 'react';
 import updatePost from '../lib/updatePost';
+=======
+import updatePost from '../lib/updatePost';
+import updateDisplayName from '@/app/lib/updateDisplayName';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'; 
+import { createClient } from '@supabase/supabase-js';
+>>>>>>> Stashed changes
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -42,7 +50,20 @@ export default function CreatePost() {
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [draggedImage, setDraggedImage] = useState(null);
+    const [displayName, setDisplayName] = useState('');
+    const [posts, setPosts] = useState([]);
     const router = useRouter(); 
+    const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
+    );
+
+    //fecha post
+    const post = JSON.parse(localStorage.getItem('selectedPost'));
+    const createdAt = new Date(post.created_at).toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+    });
 
     useEffect(() => {
         const post = JSON.parse(localStorage.getItem('selectedPost'))
@@ -50,7 +71,41 @@ export default function CreatePost() {
         setDescription(post.post_desc);
         setContent(post.post_html);
         setDraggedImage(post.post_banner_img_b64);
+<<<<<<< Updated upstream
     }, [])
+=======
+
+        async function fetchDisplayName() {
+            const userId = 'a5f3ed09-60e3-4454-884c-1541fe11920a'; // UID del usuario
+            const newDisplayName = 'Guillermo Rico'; // nombre del usuario
+            const result = await updateDisplayName(userId, newDisplayName);
+            
+            if (!result.error) {
+                setDisplayName(newDisplayName); 
+                console.log(result.successMessage);
+            } else {
+                console.error(result.error);
+            }
+        }
+    
+        async function fetchPosts() {
+            const { data, error } = await supabase
+                .from('Posts')
+                .select('*') 
+                .order('created_at', { ascending: false }); 
+    
+            if (error) {
+                console.error('Error fetching posts:', error);
+            } else {
+                setPosts(data);
+            }
+            setLoading(false);
+        }
+    
+        fetchDisplayName();
+        fetchPosts();
+    }, []);
+>>>>>>> Stashed changes
 
     const  handleSavePost = async () => {
         if (!title.trim()) {
@@ -208,6 +263,46 @@ export default function CreatePost() {
                     Cancel
                 </button>
             </div>
+<<<<<<< Updated upstream
         </section>
+=======
+        </div>
+        
+        <ReactQuill 
+            className='react-quill' 
+            value={content}
+            onChange={setContent}
+            modules={modules}
+            formats={formats} 
+        />
+
+        <div className='createPost__buttonContainer'>
+            <button 
+                className='buttonContainer__createPostButton' 
+                onClick={handleSavePost} 
+                style={{ marginTop: '10px' }}
+            >
+                Edit Post
+            </button>
+            <button className='buttonContainer__cancelPostButton' onClick={() => router.back()}>
+                Cancel
+            </button>
+        </div>
+
+        
+        <h2>written by {displayName}</h2> 
+        <p>Created on: {createdAt}</p>
+        {/* {posts.map(post => ( 
+            <div key={post.id}>
+                <p>{new Date(post.created_at).toLocaleDateString('en-US', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+            })}</p>
+            </div>
+        ))} */}
+
+    </section>
+>>>>>>> Stashed changes
     );
 }
