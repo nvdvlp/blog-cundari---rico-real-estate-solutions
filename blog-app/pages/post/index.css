@@ -1,19 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* Asegura que el padding y border se incluyan en el ancho total del elemento */
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-}
-
-h2, h3, h4, h5, p, div{
-    margin: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&display=swap');
 
 .viewPost {
     min-width: calc(320px - 22px);
@@ -24,6 +11,110 @@ h2, h3, h4, h5, p, div{
     flex-direction: column;
     align-items: center;
     padding-inline: 62px;
+}
+
+.viewPost__sort {
+    width: 100%;
+    height: 100%;
+    margin-top:130px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sort__presentation {
+    width: 548px;
+    height: 100%;
+}
+
+.presentation__tinyText {
+    font-size:24px;
+    font-weight:500;
+    font-family: 'Merriweather', serif;
+    color:#0A0A0A;
+    margin-bottom:13px;
+}
+
+.sortInput__input {
+    width:526.13px;
+    height:61px;
+    background-color: #fff;
+    border:1px solid #5a5a5a;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+    padding-left: 15px;
+}
+
+.sortInput__input::placeholder {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    color: #696767;
+}
+
+.presentation__bigText {
+    font-size: 48px;
+    font-weight: 600;
+    font-family: 'Merriweather', serif;
+    color: #003478;
+    margin-bottom: 11px;
+}
+
+.presentation__sortInput {
+    display: flex;
+    flex-direction: row;
+}
+
+.sortInput__buttonIcon {
+    cursor: pointer;
+    width: 79.3px;
+    height: 61px;
+    background-color: #003478;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius:49px;
+    border-bottom-left-radius:49px;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    z-index: 1;
+    position: relative;
+    top: 0px;
+    left: -73px;
+}
+
+.buttonIcon__searchIcon {
+    font-size: 30.87px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.sort__tags{
+    width: 557px;
+    height:100%;
+}
+
+.tagContainer__tag {
+    display: inline-block; 
+    height: 40px;
+    padding: 8px;
+    background-color:#F7F7F7;
+    border: 1px solid #77A3DC;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #666666;
+    font-family: 'Roboto', sans-serif;
+}
+
+.tags__usedTags {
+    font-size: 32px;
+    font-weight: 600;
+    font-family: 'Merriweather';
+    color: #1D639D;
+    margin-bottom: 11px;
 }
 
 .viewPost__sectionTitle {
@@ -41,8 +132,9 @@ h2, h3, h4, h5, p, div{
 .viewPost__title {
     font-size:45px;
     font-weight:600;
-    font-family:"Playfair Display";
-    color:#000;
+    font-family: "Playfair_Display";
+    color:#003478;
+    letter-spacing: 1px;
 }
 
 .viewPost__newPost {
@@ -51,7 +143,7 @@ h2, h3, h4, h5, p, div{
     border-style:none;
     border-radius:5px;
     color:#FFF;
-    background-color:#212121;
+    background-color:#003478;
     font-size:20px;
     font-weight:500;
     cursor: pointer;
@@ -68,9 +160,9 @@ h2, h3, h4, h5, p, div{
 }
 
 .viewPost__post {
-    min-width: 610px;
+    min-width: 618px;
     width: 100%; 
-    height: 141px;
+    height: 214px;
     display: flex;
     flex-direction: row;
     position: relative;  
@@ -82,10 +174,10 @@ h2, h3, h4, h5, p, div{
     left: 9px; 
     margin-top:7px;
     margin-left:9px;
-    width: 91px;
+    width: 70px;
     height: 30px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     border-radius:2px;
     flex-direction: row;
@@ -95,19 +187,21 @@ h2, h3, h4, h5, p, div{
 }
 
 .viewPost__create {
-    font-size: 25px; 
+    font-size: 18px; 
     color: #212121;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 .viewPost__link {
-    font-size: 20px;
+    font-size: 18px;
     color: #212121;
     cursor: pointer;
+    margin-right: 2px;
 }
 
 .viewPost__trash {
-    font-size: 20px;
+    font-size: 18px;
     color: #212121;
     cursor: pointer;
 }
@@ -115,28 +209,34 @@ h2, h3, h4, h5, p, div{
 .viewPost__imgPost {
     max-width: 460px;
     min-width: 239px;
-    max-height: 142px;
+    max-height: 216px;
     min-height: 142px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
 }
 
 .viewPost__textContainer{
     display: flex;
     flex-direction: column;
-    font-family: "Inter", sans-serif;
     padding-inline: 15px;
-    padding-block: 10px;
+    padding-block: 13px;
     border-block: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
 }
 
+
+.viewPost__date {
+    font-size:18px;
+    font-weight:500;
+    color:#1D639D;
+    font-family: 'Roboto', sans-serif;
+}
+
 .viewPost__postTitle {
-    font-size:25px;
+    font-size:31px;
     font-weight:600;
     font-family:"Playfair Display";
-    color:#212121;
-    margin-bottom: 18px;
+    color:#003478;
+    margin-bottom: 5px;
+    letter-spacing: -1px; 
     cursor: pointer;
 }
 
@@ -145,6 +245,17 @@ h2, h3, h4, h5, p, div{
     font-weight:500;
     color:#5E5C5C;
     line-height: 15px;
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.viewPost__by {
+    width: 100%;
+    font-size:18px;
+    font-weight:500;
+    color:#3A3939;
+    text-align: end;
+    font-family: 'Roboto', sans-serif;
 }
 
 .viewPost__post{
@@ -172,10 +283,72 @@ h2, h3, h4, h5, p, div{
     white-space: normal;         /* Allow wrapping to the next line */
 }
 
-@media screen and (min-width: 320px) and (max-width: 768px) {
+
+@media (min-width: 320px) and (max-width: 479px) {
     .viewPost{
         padding-inline: 22px;
-    }    
+    }   
+
+    .viewPost__sort {
+        flex-direction: column;
+    }
+    
+    .sort__presentation {
+        width: 362px;
+        margin-bottom: 40px;
+    }
+    
+    .presentation__tinyText {
+        font-size:15px;
+        margin-bottom:13px;
+    }
+
+    .presentation__bigText {
+        font-size: 29px;
+        margin-bottom: 11px;
+    }
+    
+    .sortInput__input {
+        width:463px;
+        height:46px;
+        font-size: 13px;
+    }
+    
+    .sortInput__input::placeholder {
+        font-size: 13px;
+    }
+    
+    .sortInput__buttonIcon {
+        width: 90px;
+        height:46px;
+        z-index: 1;
+        position: relative;
+        top: 0px;
+        left: -35px;
+    }
+    
+    .buttonIcon__searchIcon {
+        font-size: 25px;
+    }
+    
+    .sort__tags{
+        width: 362px;
+    }
+    
+    .tags__usedTags {
+        font-size: 18px;
+    }
+    
+    .tagContainer__tag {
+        display: inline-block; 
+        height: 40px;
+        padding: 8px;
+        background-color:#F7F7F7;
+        border: 1px solid #77A3DC;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
 
     .viewPost__post{
         min-width: calc(320px - 44px) !important;
@@ -242,3 +415,79 @@ h2, h3, h4, h5, p, div{
     }
 }
 
+@media (min-width: 480px) and (max-width: 932px) {
+    .viewPost{
+        padding-inline: 22px;
+    }   
+
+    .viewPost__sort {
+        flex-direction: column;
+    }
+    
+    .sort__presentation {
+        width: 540px;
+        margin-bottom: 40px;
+    }
+    
+    .presentation__tinyText {
+        font-size:20px;
+        margin-bottom:13px;
+    }
+
+    .presentation__bigText {
+        font-size: 40px;
+        margin-bottom: 11px;
+    }
+    
+    .sortInput__input {
+        width:463px;
+        height:61px;
+        font-size: 13px;
+    }
+    
+    .sortInput__input::placeholder {
+        font-size: 13px;
+    }
+    
+    .sortInput__buttonIcon {
+        width: 60px;
+        height:61px;
+        z-index: 1;
+        position: relative;
+        top: 0px;
+        left: -35px;
+    }
+    
+    .buttonIcon__searchIcon {
+        font-size: 25px;
+    }
+    
+    .sort__tags{
+        width: 362px;
+    }
+    
+    .tags__usedTags {
+        font-size: 22px;
+    }
+    
+    .tagContainer__tag {
+        display: inline-block; 
+        height: 40px;
+        padding: 8px;
+        background-color:#F7F7F7;
+        border: 1px solid #77A3DC;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+}
+
+@media (min-width: 768px ) and (max-width: 1440px) {
+
+}
+
+.active-tag {
+    background-color: #0070f3;
+    color: white;
+    font-weight: bold;
+}

@@ -5,6 +5,8 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import updatePost from '../lib/updatePost';
+import updateDisplayName from '@/app/lib/updateDisplayName';
+import { createClient } from '@supabase/supabase-js';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -65,6 +67,22 @@ export default function EditPost() {
     const [content, setContent] = useState('');
     const [draggedImage, setDraggedImage] = useState(null);
     const router = useRouter(); 
+    const [displayName, setDisplayName] = useState('');
+    const [tags, setTags] = useState([]);
+    const [newTag, setNewTag] = useState('');
+    const [allTags, setAllTags] = useState([]);
+    const [posts, setPosts] = useState([]); // Estado para almacenar todos los posts
+    const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
+    );
+
+        //fecha post
+        const post = JSON.parse(localStorage.getItem('selectedPost'));
+        const createdAt = new Date(post.created_at).toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+        });
 
     useEffect(() => {
         const post = JSON.parse(localStorage.getItem('selectedPost'));
@@ -72,6 +90,49 @@ export default function EditPost() {
         setDescription(post.post_desc);
         setContent(post.post_html);
         setDraggedImage(post.post_banner_img_b64);
+
+        async function fetchDisplayName() {
+            const userId = 'a5f3ed09-60e3-4454-884c-1541fe11920a'; // UID del usuario
+            const newDisplayName = 'Guillermo Rico'; // nombre del usuario
+            const result = await updateDisplayName(userId, newDisplayName);
+            
+            if (!result.error) {
+                setDisplayName(newDisplayName); 
+                console.log(result.successMessage);
+            } else {
+                console.error(result.error);
+            }
+        }
+    
+        async function fetchPosts() {
+            setLoading(true);
+            const { data, error } = await supabase
+                .from('Posts')
+                .select('*') 
+                .order('created_at', { ascending: false }); 
+    
+            if (error) {
+                console.error('Error fetching posts:', error);
+            } else {
+                setPosts(data);
+            }
+        }
+
+        async function fetchAllTags() {
+            const { data, error } = await supabase
+                .from('Tags') // Asegúrate de que esta tabla exista y contenga los tags
+                .select('*');
+        
+            if (error) {
+                console.error('Error fetching tags:', error);
+            } else {
+                setAllTags(data); // Establece los tags disponibles
+            }
+        }
+
+        fetchDisplayName();
+        fetchPosts();
+        fetchAllTags();
     }, []);
 
     const handleSavePost = async () => {
@@ -94,10 +155,10 @@ export default function EditPost() {
             post_desc: description,
             post_banner_img_b64: draggedImage,
             post_html: content
-        });
+        }, tags);
 
         if (error) {
-            alert("Error editing post");
+            alert(`${error.message}`);
             console.log(error);
         } else if (successMessage) {
             console.log("Edited SUCCESSFULLY");
@@ -105,6 +166,7 @@ export default function EditPost() {
             setDescription('');
             setContent('');
             setDraggedImage(null);
+            setTags([]); // Limpiar tags
             router.push(`/post`);
         }
     };
@@ -147,94 +209,156 @@ export default function EditPost() {
         handleFileUpload({ target: { files: [file] } });
     };
 
+    const handleAddTag = () => {
+        if (newTag.trim() === '') return; 
+        setTags((prevTags) => [...prevTags, newTag]);
+        setNewTag('');
+    };
+
+    const handleRemoveTag = (tagToRemove) => {
+        setTags((prevTags) => prevTags.filter(tag => tag !== tagToRemove));
+    };
+
+    const handleSelectTag = (tag) => {
+        if (!tags.includes(tag)) {
+            setTags([...tags, tag]);
+        }
+    };
+
     return (
         <section className='createPost'>
-        <h2 className='createPost__title'>Edit Post</h2>
-        <div className='createPost__informationContainer'>
-            <div className='createPost__imgDropContainer'>
-                <div 
-                    className='informationContainer__dragAndDropZone'
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={handleDropImage}
-                >
-                    {draggedImage ? (
-                        <>
+            <h2 className='createPost__title'>Edit Post</h2>
+            <div className='createPost__informationContainer'>
+                <div className='createPost__imgDropContainer'>
+                    <div 
+                        className='informationContainer__dragAndDropZone'
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={handleDropImage}
+                    >
+                        {draggedImage ? (
                             <img src={draggedImage} alt="Uploaded" />
-                        </>
-                    ) : (
-                        <>  
-                            <div className='informationContainer__imgFolderContainer'>
-                                <ion-icon class='imgFolderContainer__imgIcon' name="images"></ion-icon>
-                                <p className='imgFolderContainer__dropText'>Drop an image or select a file</p>
-                                <button 
-                                    className="imgFolderContainer__uploadButton" 
-                                    onClick={() => document.getElementById('imageInput').click()}
-                                >
-                                    Seleccionar Archivo
-                                </button>
-                                <input
-                                    type="file"
-                                    id="imageInput"
-                                    accept="image/*"
-                                    onChange={handleFileUpload}
-                                    className="fileInput" 
-                                />
-                            </div>
-                            <p className='imgFolderContainer__warningMessage'>It is recomends that the image be larger than 360*640px</p>
-                        </>
-                    )}
-                </div>
+                        ) : (
+                            <>  
+                                <div className='informationContainer__imgFolderContainer'>
+                                    <ion-icon class='imgFolderContainer__imgIcon' name="images"></ion-icon>
+                                    <p className='imgFolderContainer__dropText'>Drop an image or select a file</p>
+                                    <button 
+                                        className="imgFolderContainer__uploadButton" 
+                                        onClick={() => document.getElementById('imageInput').click()}
+                                    >
+                                        Select File
+                                    </button>
+                                    <input
+                                        type="file"
+                                        id="imageInput"
+                                        accept="image/*"
+                                        onChange={handleFileUpload}
+                                        className="fileInput" 
+                                    />
+                                </div>
+                                <p className='imgFolderContainer__warningMessage'>It is recommended that the image be larger than 360*640px</p>
+                            </>
+                        )}
+                    </div>
 
-                <div className="removeImageButtonContainer">
+                    <div className="removeImageButtonContainer">
                         <button className='removeImageButtonContainer__removeImageButton'
-                                            onClick={() => {
-                                                setDraggedImage(null); 
-                                                document.getElementById('imageInput').value = ''; 
-                                            }} 
+                            onClick={() => {
+                                setDraggedImage(null); 
+                                document.getElementById('imageInput').value = ''; 
+                            }} 
                         >
                             <p className='removeImageButton__text'>remove loaded image</p>
                             <ion-icon class='removeImageButton__trashIcon' name="trash-outline"></ion-icon>
                         </button>
+                    </div>
+                </div>
+
+                <div className='informationContainer__inputContainer'>
+                    <h2 className='inputContainer__textInputPost'>Title</h2>
+                    <input 
+                        type="text" 
+                        className='inputContainer__size1'
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <h2 className='inputContainer__textInputPost'>Description (optional)</h2>
+                    <textarea
+                        className='inputContainer__size2'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
                 </div>
             </div>
 
-            <div className='informationContainer__inputContainer'>
-                <h2 className='inputContainer__textInputPost'>Title</h2>
-                <input 
-                    type="text" 
-                    className='inputContainer__size1'
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <h2 className='inputContainer__textInputPost'>Description (opcional)</h2>
-                <textarea
-                    className='inputContainer__size2'
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </div>
-        </div>
-        
-        <ReactQuill 
-            className='react-quill' 
-            value={content}
-            onChange={setContent}
-            modules={modules}
-            formats={formats} 
-        />
+            <div className='createPost__tagContainer'>
+                <div className='tagContainer__inputFields'>
+                    <div className='inputFields__addTagInput'>
+                        <input 
+                            type="text" 
+                            placeholder='Add a new tag'
+                            className='addTagInput__input'
+                            value={newTag}
+                            onChange={(e) => setNewTag(e.target.value)}
+                        />
+                        <ion-icon class='addTagInput__icon' name="add-outline" onClick={handleAddTag}></ion-icon>
+                    </div> 
+                    <div className='tagContainer__tagsSelected'>
+                        {tags.map((tag) => (
+                            <div className='tagsContainer__tag' key={tag}>
+                                {tag}
+                                <button onClick={() => handleRemoveTag(tag)}>x</button> {/* Botón para eliminar */}
+                            </div>
+                        ))}
+                    </div>                    
+                </div>
+                
 
-        <div className='createPost__buttonContainer'>
-            <button 
-                className='buttonContainer__createPostButton' 
-                onClick={handleSavePost} 
-                style={{ marginTop: '10px' }}
-            >
-                Edit Post
-            </button>
-            <button className='buttonContainer__cancelPostButton' onClick={() => router.back()}>
-                Cancel
-            </button>
-        </div>
-    </section>
+                <div className='tagContainer__allTags'>
+                    <h2 className='allTags__title'>All Tags</h2>
+                    <div className='allTags__tagsContainer'>
+                        {allTags.length > 0 ? (
+                            allTags.map((tag) => (
+                                <div 
+                                    key={tag.id} // Asegúrate de que cada tag tenga un id único
+                                    className='tagsContainer__tag all' 
+                                    onClick={() => handleSelectTag(tag.tag_name)} // Usar el nombre o el id según tu estructura
+                                >
+                                    {tag.tag_name}
+                                </div>
+                            ))
+                        ) : (
+                            <p>No tags available.</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            <ReactQuill 
+                className='react-quill' 
+                value={content}
+                onChange={setContent}
+                modules={modules}
+                formats={formats} 
+            />
+
+            <div className='createPost__footer'>
+                <h2 className='footer__writtenby'>written by {displayName}</h2> 
+                <p className='footer__writtenby'>Created on: {createdAt}</p>
+            </div>
+
+            <div className='createPost__buttonContainer'>
+                <button 
+                    className='buttonContainer__createPostButton' 
+                    onClick={handleSavePost} 
+                    style={{ marginTop: '10px' }}
+                >
+                    Edit Post
+                </button>
+                <button className='buttonContainer__cancelPostButton' onClick={() => router.back()}>
+                    Cancel
+                </button>
+            </div>
+        </section>
     );
 }

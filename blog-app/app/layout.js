@@ -1,7 +1,7 @@
 
 
 import './css/global.css'
-import { Inter } from 'next/font/google'
+import { Inter, Merriweather, Roboto, Playfair_Display } from 'next/font/google'
 import Header from './components/Header'
 import Script from 'next/script';
 
@@ -27,27 +27,24 @@ const inter = Inter({
   subsets:["latin"],
 })
 
+const merriweather = Merriweather({
+  weight: ["300", "400", "700"],
+  styles: ["italic", "normal"],
+  subsets: ["latin"],
+})
+
+const roboto = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+})
+
+const playfair = Playfair_Display({
+  weight: ["400", "700"],
+  styles: ["italic", "normal"],
+  subsets: ["latin"],
+})
+
 export default function RootLayout({ children }) {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const [loading, setLoading] = useState(true);
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('authID'); 
-  //   if (token) {
-  //     setIsAuthenticated(true); 
-  //   } else {
-  //     if (router.pathname !== '/login') {
-  //       router.push('/login'); // Redirige a login si no está autenticado y no está en la página de login
-  //     }
-  //   }
-  //   setLoading(false); 
-  // }, [router]);
-
-  // if (loading) {
-  //   return <Loader />;
-  // }
-
   return (
     <html lang="en">
       <head>

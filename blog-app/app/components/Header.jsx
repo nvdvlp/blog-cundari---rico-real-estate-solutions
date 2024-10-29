@@ -1,5 +1,6 @@
 // Header jsx
 'use client'; 
+import '../css/global.css'
 import './Header.css';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation'; 

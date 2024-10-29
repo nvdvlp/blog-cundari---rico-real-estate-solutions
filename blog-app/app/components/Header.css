@@ -32,10 +32,10 @@ header {
 }
 
 .cudariRico {
-    font-family: "Inter", sans-serif;
     font-size: 12px;
     font-weight: 400;
-    color: #000000;
+    color: #003478;
+    font-family: "Inter", sans-serif;
 }
 
 .realState {
@@ -67,7 +67,7 @@ a {
 }
 
 .active a {
-    border-bottom: 1px solid #212121;
+    border-bottom: 1px solid #003478;
 }
 
 a {

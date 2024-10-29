@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&display=swap');
 
 .post {
     width: 100%;
@@ -22,7 +23,7 @@
     font-family: "Playfair Display";
     font-size:45px;
     font-weight: 600;
-    color:#000000;
+    color:#003478 ;
     margin-bottom:34px;
 }
 
@@ -56,7 +57,7 @@
 
 .mediaIcon {
     font-size:24px;
-    color: #615F5F;
+    color: #003478;
 }
 
 .post__img {
@@ -76,6 +77,20 @@
     font-weight: 400;
     color:#3A3939;
     white-space: pre-wrap;
+}
+
+.post__writter {
+    font-size:20px;
+    font-weight: 500;
+    color:#3A3939;
+    font-family: 'Roboto', sans-serif;
+}
+
+.socialDateContainer__date {
+    font-size:20px;
+    font-weight: 500;
+    color:#3A3939;
+    font-family: 'Roboto', sans-serif;
 }
 
 @media (min-width: 1024px ) and (max-width: 1439px) {
