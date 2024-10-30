@@ -8,7 +8,6 @@ import Loader from '@/app/components/loader';
 import Header from '../../app/components/Header';
 import Supabase from '@/app/lib/supabaseClient';
 import updateDisplayName from '@/app/lib/updateDisplayName';
-import { createClient } from '@supabase/supabase-js';
 
 export default function PostPage() {
     const router = useRouter();
@@ -17,17 +16,8 @@ export default function PostPage() {
     const [postURL, setPostURL] = useState('');
     const [loading, setLoading] = useState(true); // Estado para gestionar la carga
     const [displayName, setDisplayName] = useState('');
-    const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
-    );
-
-    //fecha post
-    const post = JSON.parse(localStorage.getItem('selectedPost'));
-    const createdAt = new Date(post.created_at).toLocaleDateString('en-US', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric'
-    });
+    const [selectedTags, setSelectedTags] = useState([])
+    const [createdAt, setCreatedAt] = useState(new Date())
 
     const fecha = new Date(); 
     const day = fecha.getDate();      
@@ -45,6 +35,35 @@ export default function PostPage() {
             .eq('post_id', id) 
             .single(); 
 
+            const { data: tagIdArray, error: currentTagsError } = await Supabase
+            .from('Post_tags')
+            .select('tag_id')
+            .eq('post_id', id);
+
+
+            if (currentTagsError) {
+                console.error('Error fetching post:', error);
+                setLoading(false);
+                return; 
+            }
+
+            const tagArray = [];
+
+            if(tagIdArray){
+                console.log(tagIdArray)
+                for (const tag of tagIdArray) {
+                    let { data: tagName, error: tagError } = await Supabase
+                      .from('Tags')
+                      .select('tag_name')
+                      .eq('id', tag.tag_id)
+                      .single();
+
+                    tagArray.push(tagName)
+                }
+                console.log(tagArray)
+                setSelectedTags(tagArray)
+            }
+
             if (error) {
                 console.error('Error fetching post:', error);
                 setLoading(false);
@@ -52,6 +71,14 @@ export default function PostPage() {
             }
 
             if (data) {
+                setCreatedAt(
+                    new Date(data.created_at).toLocaleDateString('en-US', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    })
+                )
+                console.log(createdAt)
                 setPostDetails(data);
                 const postPath = `${window.location.origin}/post/${data.post_id}`;
                 setPostURL(postPath);
@@ -92,6 +119,22 @@ export default function PostPage() {
         fetchDisplayName();
         fetchPostDetails();
     }, [id]);
+
+    useEffect(() => {
+        const loadIonIcons = () => {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js';
+            script.async = true;
+            document.body.appendChild(script);
+
+            const scriptNoModule = document.createElement('script');
+            scriptNoModule.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js';
+            scriptNoModule.async = true;
+            document.body.appendChild(scriptNoModule);
+        };
+
+        loadIonIcons();
+    }, []);
     
     if (loading) {
         return <Loader />;
@@ -106,13 +149,26 @@ export default function PostPage() {
             <Header />
         <section className='post'>
             <div className='post__titleSection'>
-                <h2 className='post__writter'>{displayName}</h2> 
                 <h1 className='titleSection__postTitle'>{postDetails.post_title}</h1>
                 <p className='titleSection__postDesc'>{postDetails.post_desc}</p>
+                <div className='usedTags__tagContainer'>
+                            {selectedTags.length > 0 ? (
+                                selectedTags.map((tag, index) => (
+                                    <div
+                                        className='viewPost__tag' 
+                                        key={index}
+                                    >
+                                        {tag.tag_name}
+                                    </div>
+                                ))
+                            ) : (
+                                <div>No tags available</div> 
+                            )}
+                        </div>
             </div>
 
             <div className='post__socialDateContainer'>
-                <p className='socialDateContainer__date'>{createdAt}</p>
+                <p className='socialDateContainer__date'>{displayName} | {createdAt}</p>
                 <div className='socialDateContainer__socialMediaContainer'>
                     <a 
                         href={`https://api.whatsapp.com/send?text=¡Mira este post increíble! ${postURL}`} 

@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&display=swap');
 
-.post {
+.post{
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 50px;
 }
 
 .post__titleSection {
@@ -91,6 +92,30 @@
     font-weight: 500;
     color:#3A3939;
     font-family: 'Roboto', sans-serif;
+}
+
+.viewPost__tag{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    font-family: 'Inter';
+    color: #426189;
+    font-size: 13px;
+    padding: 6px 12px;
+    border: 1px solid #426189;
+    border-radius: 8px;
+    background-color: #D9E6F8;
+    white-space: nowrap;
+    height: min-content;
+}
+
+.usedTags__tagContainer{
+    display: flex;
+    gap: 15px;
+    height: 30px;
+    overflow: scroll;
+    margin-top: 15px;
 }
 
 @media (min-width: 1024px ) and (max-width: 1439px) {

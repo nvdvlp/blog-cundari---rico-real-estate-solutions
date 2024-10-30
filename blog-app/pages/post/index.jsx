@@ -164,23 +164,25 @@ function ViewPost() {
                 <div className='viewPost__sort'>
                     <div className='sort__presentation'>
                         <h2 className='presentation__tinyText'>Need guidance in real estate?</h2>
-                        <h2 className='presentation__bigText'>Begin your journey with expert advice!</h2>
-                        <div className='presentation__sortInput'>
-                            <input 
-                                className='sortInput__input' 
-                                placeholder='sort by name post!'
-                                type="text"
-                                value={searchTerm}
-                                onChange={handleSearchInputChange}
-                            />
-                            <div className='sortInput__buttonIcon'>
-                                <ion-icon 
-                                class='buttonIcon__searchIcon'
-                                onClick={handleSearchButtonClick}
-                                name="search-outline">
-                                </ion-icon>
+                        <section className='presentation__bannerContainer'>
+                            <h2 className='presentation__bigText'>Begin your journey with expert advice!</h2>
+                            <div className='presentation__sortInput'>
+                                <input 
+                                    className='sortInput__input' 
+                                    placeholder='Sort by post'
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={handleSearchInputChange}
+                                />
+                                <div className='sortInput__buttonIcon'>
+                                    <ion-icon 
+                                    class='buttonIcon__searchIcon'
+                                    onClick={handleSearchButtonClick}
+                                    name="search-outline">
+                                    </ion-icon>
+                                </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
 
                     <div className='sort__tags'>
@@ -239,14 +241,17 @@ function ViewPost() {
                                     <ion-icon name="trash" class='viewPost__trash' onClick={() => deletePostHandler(post.post_id)}></ion-icon>
                                 </div>
                                 <div className='viewPost__textContainer'>
-                                    <h2 className='viewPost__date'>{postCreatedAt}</h2>
+                                    <h2 className='viewPost__date'>
+                                        {displayName} |
+                                        <span className='viewPost__by'>&nbsp;{postCreatedAt}</span>
+                                    </h2>
                                     <h2 className='viewPost__postTitle truncated-text'
                                         onClick={() => {
                                             localStorage.setItem('selectedPost', JSON.stringify(post));
                                             router.push(`/post/${post.post_id}`);
                                         }}>{post.post_title}</h2>
                                     <h2 className='viewPost__postContent truncated-text-2'>{post.post_desc}</h2>
-                                    <h2 className='viewPost__by'>{displayName}</h2>
+                                    
 
                                         {/* Renderizar los tags asociados */}
                                         <div className='viewPost__tagsContainer'>

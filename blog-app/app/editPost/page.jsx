@@ -72,9 +72,11 @@ export default function EditPost() {
     const [newTag, setNewTag] = useState('');
     const [allTags, setAllTags] = useState([]);
     const [posts, setPosts] = useState([]); // Estado para almacenar todos los posts
+    const [loading, setLoading] = useState(true); 
     const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
     );
+    const [selectedTags, setSelectedTags] = useState([])
 
         //fecha post
         const post = JSON.parse(localStorage.getItem('selectedPost'));
@@ -86,10 +88,12 @@ export default function EditPost() {
 
     useEffect(() => {
         const post = JSON.parse(localStorage.getItem('selectedPost'));
+        console.log(post)
         setTitle(post.post_title);
         setDescription(post.post_desc);
         setContent(post.post_html);
         setDraggedImage(post.post_banner_img_b64);
+        setSelectedTags(post.tags)
 
         async function fetchDisplayName() {
             const userId = 'a5f3ed09-60e3-4454-884c-1541fe11920a'; // UID del usuario
@@ -155,12 +159,13 @@ export default function EditPost() {
             post_desc: description,
             post_banner_img_b64: draggedImage,
             post_html: content
-        }, tags);
+        }, selectedTags);
 
         if (error) {
             alert(`${error.message}`);
             console.log(error);
-        } else if (successMessage) {
+        } 
+        else if (successMessage) {
             console.log("Edited SUCCESSFULLY");
             setTitle('');
             setDescription('');
@@ -209,21 +214,41 @@ export default function EditPost() {
         handleFileUpload({ target: { files: [file] } });
     };
 
-    const handleAddTag = () => {
-        if (newTag.trim() === '') return; 
-        setTags((prevTags) => [...prevTags, newTag]);
-        setNewTag('');
-    };
+    const handleAddTag = async () => {
+        const trimmedTag = newTag.trim();
+        if (!trimmedTag || tags.includes(trimmedTag)) return;
 
-    const handleRemoveTag = (tagToRemove) => {
-        setTags((prevTags) => prevTags.filter(tag => tag !== tagToRemove));
-    };
+        // Añadir a Supabase si no existe
+        const { data, error } = await Supabase
+            .from('Tags')
+            .insert([{ tag_name: trimmedTag }])
+            .select();
+    
+        if (error) {
+            console.error('Error adding tag:', error);
+        } else {
+            setTags([...tags, trimmedTag]);
+            setSelectedTags([...selectedTags, trimmedTag]);
+        }
+        setNewTag('');
+        
+        // if(trimmedTag.trim() && !tags.includes(trimmedTag)){
+        //     setTags([...tags, trimmedTag]);
+        //     setSelectedTags([...selectedTags, trimmedTag]);
+        // }else if (!selectedTags.includes(trimmedTag)){
+        //     setSelectedTags([...selectedTags, trimmedTag])
+        // }
+    }
+
+    const handleRemoveTag = (index) => { 
+        setSelectedTags(selectedTags.filter((_, i) => i !== index));
+    } 
 
     const handleSelectTag = (tag) => {
-        if (!tags.includes(tag)) {
-            setTags([...tags, tag]);
+        if(!selectedTags.includes(tag)){
+            setSelectedTags([...selectedTags, tag]);
         }
-    };
+    }
 
     return (
         <section className='createPost'>
@@ -304,12 +329,16 @@ export default function EditPost() {
                         <ion-icon class='addTagInput__icon' name="add-outline" onClick={handleAddTag}></ion-icon>
                     </div> 
                     <div className='tagContainer__tagsSelected'>
-                        {tags.map((tag) => (
-                            <div className='tagsContainer__tag' key={tag}>
+                    {selectedTags.length > 0 ? (
+                        selectedTags.map((tag, index) => (
+                            <div key={index} className='tagsContainer__tag'>
                                 {tag}
-                                <button onClick={() => handleRemoveTag(tag)}>x</button> {/* Botón para eliminar */}
+                                <span className='tag__deleteTag' onClick={() => handleRemoveTag(index)}>x</span>
                             </div>
-                        ))}
+                        ))
+                        ) : (
+                            <p>No tags created or selected.</p>
+                        )}
                     </div>                    
                 </div>
                 
