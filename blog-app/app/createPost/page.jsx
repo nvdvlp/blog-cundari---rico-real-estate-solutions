@@ -1,20 +1,22 @@
 'use client';
+import './CreatePost.css';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation'; 
-import './CreatePost.css';
+import updateDisplayName from '@/app/lib/updateDisplayName';
 import createPost from '@/app/lib/createPost.js';
+import Supabase from '../lib/supabaseClient';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'; 
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
+//quill fonts
 const fontOptions = [
     { label: 'Roboto', value: 'roboto' },
     { label: 'Open Sans', value: 'open-sans' },
     { label: 'Arial', value: 'arial' },
     { label: 'Verdana', value: 'verdana' },
 ];
-
+//quill modules
 const modules = {
     toolbar: [
         [{ 'header': '1' }, { 'header': '2' }, { 'font': fontOptions.map(font => font.value) }],
@@ -25,8 +27,7 @@ const modules = {
         ['clean']
     ],
 };
-
-
+//quill formats
 const formats = [
     'header',
     'font',
@@ -48,51 +49,104 @@ export default function CreatePost() {
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [draggedImage, setDraggedImage] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); // Estado para cargar
+    const [displayName, setDisplayName] = useState('');
+    const [posts, setPosts] = useState([]); // Define posts state
+    const [loading, setLoading] = useState(true); // State for loading posts
     const router = useRouter(); 
 
+    //estados para la creacion de los tags
+    const [tags, setTags] = useState([]); // Todos los tags creados
+    const [newTag,  setNewTag] = useState('') // Input para un nuevo tag
+    const [selectedTags, setSelectedTags] = useState([]) // Tags seleccionados para el post
+
+    useEffect(() => {
+        async function fetchDisplayName() {
+            const userId = 'a5f3ed09-60e3-4454-884c-1541fe11920a'; // UID del usuario
+            const newDisplayName = 'Guillermo Rico'; // nombre del usuario
+            const result = await updateDisplayName(userId, newDisplayName);
+            
+            if (!result.error) {
+                setDisplayName(newDisplayName); 
+                console.log(result.successMessage);
+            } else {
+                console.error(result.error);
+            }
+        }
+    
+        async function fetchPosts() {
+            const { data, error } = await Supabase
+                .from('Posts')
+                .select('*') 
+                .order('created_at', { ascending: false }); 
+    
+            if (error) {
+                console.error('Error fetching posts:', error);
+            } else {
+                setPosts(data);
+            }
+            setLoading(false);
+        }
+
+        async function fetchTags(){
+            const {data, error } = await Supabase
+            .from('Tags')
+            .select('tag_name')
+
+            if (error) {
+                console.error('Error fetching tags:', error);
+            } else {
+                setTags(data.map(tag => tag.tag_name));
+            }
+        }
+    
+        fetchDisplayName();
+        fetchPosts();
+        fetchTags();
+    }, []);
+
+    //salvar post
     const  handleSavePost = async () => {
-        if (!title.trim()) {
-            alert('The title post cannot be empty.');
+        //el post solo atmite 20 caracteres en el titulo
+        if (title.trim().length < 20) {
+            alert('The title must contain at least 20 characters.');
             return;
         }
 
+        //el post tiene que contener imagen
+        if (!draggedImage) {
+            alert('Please upload an image before saving the post.');
+            return;
+        }
+        
+        //contenido html del post NO puede estar vacio
         if (!content.trim()) {
             alert('The post content cannot be empty.');
             return;
         }
+            // Imprimir valores
+        console.log('Title:', title);
+        console.log('Description:', description);
+        console.log('Image:', draggedImage);
+        console.log('Content:', content);
+        console.log('Tags:', selectedTags);
 
         // Guardar el post si los campos están llenos
-        const currentDate = new Date().toLocaleDateString();
-
-        const newPost = {
-            title,
-            description,
-            content,
-            image: draggedImage,
-            date: currentDate,
-            socialMedia: {
-                whatsapp: 'your-whatsapp-link',
-                twitter: 'your-twitter-link',
-                instagram: 'your-instagram-link',
-                facebook: 'your-facebook-link'
-            }
-        };
-        const { successMessage, error } = await createPost(title, description, draggedImage, content)
-
+        const { successMessage, error } = await createPost(title, description, draggedImage, content, selectedTags)
         if(error){
-            alert("error creando post")
+            alert("error creating the post"  + error.message)
             console.log(error)
         } else if(successMessage){
-            console.log("CREATED SUCCESFULLY")
+            console.log("Created successfully")
             setTitle('');
             setDescription('');
             setContent('');
             setDraggedImage(null);
-            router.push('/viewPost')
+            setTags([]) // rastrea los tags
+            router.push('/post')
         }
     };
 
+    //arrastrar imagen 
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
@@ -132,11 +186,51 @@ export default function CreatePost() {
         }
     };
 
+    //dropear imagen 
     const handleDropImage = (e) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         handleFileUpload({ target: { files: [file] } });
     };
+
+    //crear un nuevo tag
+    const handleAddTag = async () => {
+        const trimmedTag = newTag.trim();
+        if (!trimmedTag || tags.includes(trimmedTag)) return;
+
+        // Añadir a Supabase si no existe
+        const { data, error } = await Supabase
+            .from('Tags')
+            .insert([{ tag_name: trimmedTag }])
+            .select();
+    
+        if (error) {
+            console.error('Error adding tag:', error);
+        } else {
+            setTags([...tags, trimmedTag]);
+            setSelectedTags([...selectedTags, trimmedTag]);
+        }
+        setNewTag('');
+        
+        // if(trimmedTag.trim() && !tags.includes(trimmedTag)){
+        //     setTags([...tags, trimmedTag]);
+        //     setSelectedTags([...selectedTags, trimmedTag]);
+        // }else if (!selectedTags.includes(trimmedTag)){
+        //     setSelectedTags([...selectedTags, trimmedTag])
+        // }
+    }
+    
+    //borrar tags
+    const handleRemoveTag = (index) => { 
+        setSelectedTags(selectedTags.filter((_, i) => i !== index));
+    } 
+
+    //seleccionar los tags desde la lista de tags
+    const handleSelectTag = (tag) => {
+        if(!selectedTags.includes(tag)){
+            setSelectedTags([...selectedTags, tag]);
+        }
+    }
 
     return (
         <section className='createPost'>
@@ -200,7 +294,61 @@ export default function CreatePost() {
                     </textarea>
                 </div>
             </div>
+            
+            <div className='createPost__tagContainer'>
+                <div class='tagContainer__inputFields'>
+                    {/* Creacion de tags */}
+                    <div className='inputFields__addTagInput'>
+                        <input 
+                        type="text" 
+                        placeholder='Add a new tag'
+                        className='addTagInput__input'
+                        value={newTag}
+                        onChange={(e) => setNewTag(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleAddTag()} //anadir tag al presionar
+                        />
+                        <ion-icon 
+                        class='addTagInput__icon' 
+                        name="add-outline"
+                        onClick={handleAddTag} //anadir tag al clickear
+                        ></ion-icon>   
+                    </div> 
 
+                    {/* Contenedor para tags seleccionados */}
+                    <div className='tagContainer__tagsSelected'>
+                    {selectedTags.length > 0 ? (
+                        selectedTags.map((tag, index) => (
+                            <div key={index} className='tagsContainer__tag'>
+                                {tag}
+                                <span className='tag__deleteTag' onClick={() => handleRemoveTag(index)}>x</span>
+                            </div>
+                        ))
+                        ) : (
+                            <p>No tags created or selected.</p>
+                        )}
+                    </div>
+                </div>                    
+
+                {/* Contenedor para todos los tags */}
+                <div className='tagContainer__allTags'>
+                    <h2 className='allTags__title'>All Tags</h2>
+                    <div className='allTags__tagsContainer'>
+                        {tags.length > 0 ? (
+                            tags.map((tag, index) => (
+                                <div 
+                                    key={index}
+                                    className='tagsContainer__tag all' 
+                                    onClick={() => handleSelectTag(tag)}
+                                >
+                                    {tag}
+                                </div>
+                            ))
+                        ) : (
+                            <p>No tags available.</p>
+                        )}
+                    </div>
+                </div>      
+            </div>     
 
             <ReactQuill 
                 class='quill' 
@@ -210,6 +358,10 @@ export default function CreatePost() {
                 formats={formats} 
             />
 
+            <div className='createPost__footer'>
+                <h2 className='footer__writenby'>written by {displayName}</h2> 
+                {/* <p>Created on: {createdAt}</p> */}
+            </div>
 
             <div className='createPost__buttonContainer'>
                 <button className='buttonContainer__createPostButton' onClick={handleSavePost} style={{ marginTop: '10px' }}>
