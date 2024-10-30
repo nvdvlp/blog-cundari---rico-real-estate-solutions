@@ -113,8 +113,8 @@
 .usedTags__tagContainer{
     display: flex;
     gap: 15px;
-    height: 30px;
-    overflow: scroll;
+    height: 60px;
+    overflow-x: scroll;
     margin-top: 15px;
 }
 
