@@ -77,24 +77,26 @@ export default function EditPost() {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
     );
     const [selectedTags, setSelectedTags] = useState([])
-
-        //fecha post
-        const post = JSON.parse(localStorage.getItem('selectedPost'));
-        const createdAt = new Date(post.created_at).toLocaleDateString('en-US', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric'
-        });
+    const [createdAt, setCreatedAt] = useState('');
 
     useEffect(() => {
-        const post = JSON.parse(localStorage.getItem('selectedPost'));
-        console.log(post)
-        setTitle(post.post_title);
-        setDescription(post.post_desc);
-        setContent(post.post_html);
-        setDraggedImage(post.post_banner_img_b64);
-        setSelectedTags(post.tags)
-
+        if (typeof window !== 'undefined') {
+            const post = JSON.parse(localStorage.getItem('selectedPost'));
+            console.log(post)
+            if (post) {
+                setTitle(post.post_title);
+                setDescription(post.post_desc);
+                setContent(post.post_html);
+                setDraggedImage(post.post_banner_img_b64);
+                setSelectedTags(post.tags);
+                setCreatedAt(new Date(post.created_at).toLocaleDateString('en-US', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                }));
+            }
+        }
+        
         async function fetchDisplayName() {
             const userId = 'a5f3ed09-60e3-4454-884c-1541fe11920a'; // UID del usuario
             const newDisplayName = 'Guillermo Rico'; // nombre del usuario
