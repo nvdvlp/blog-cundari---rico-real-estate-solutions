@@ -52,6 +52,8 @@ export default function CreatePost() {
     const [displayName, setDisplayName] = useState('');
     const [posts, setPosts] = useState([]); // Define posts state
     const [loading, setLoading] = useState(true); // State for loading posts
+    const [isSaving, setIsSaving] = useState(false);  // Loader for "Create Post" button
+    const [isCancelling, setIsCancelling] = useState(false);  // Loader for "Cancel" button
     const router = useRouter(); 
 
     //estados para la creacion de los tags
@@ -106,21 +108,26 @@ export default function CreatePost() {
 
     //salvar post
     const  handleSavePost = async () => {
+        setIsSaving(true);
+
         //el post solo atmite 20 caracteres en el titulo
         if (title.trim().length < 20) {
             alert('The title must contain at least 20 characters.');
+            setIsSaving(false);
             return;
         }
 
         //el post tiene que contener imagen
         if (!draggedImage) {
             alert('Please upload an image before saving the post.');
+            setIsSaving(false);
             return;
         }
         
         //contenido html del post NO puede estar vacio
         if (!content.trim()) {
             alert('The post content cannot be empty.');
+            setIsSaving(false);
             return;
         }
             // Imprimir valores
@@ -144,6 +151,14 @@ export default function CreatePost() {
             setTags([]) // rastrea los tags
             router.push('/post')
         }
+
+        setIsSaving(false); 
+    };
+
+    const handleCancelPost = () => {
+        setIsCancelling(true);  
+        router.back();
+        setIsCancelling(false);  
     };
 
     //arrastrar imagen 
@@ -364,11 +379,21 @@ export default function CreatePost() {
             </div>
 
             <div className='createPost__buttonContainer'>
-                <button className='buttonContainer__createPostButton' onClick={handleSavePost} style={{ marginTop: '10px' }}>
-                    Create Post
+                <button 
+                    className='buttonContainer__createPostButton' 
+                    onClick={handleSavePost} 
+                    style={{ marginTop: '10px' }}
+                    disabled={isSaving} 
+                >
+                    {isSaving ? 'Saving...' : 'Create Post'}
                 </button>
-                <button className='buttonContainer__cancelPostButton' onClick={() => router.back()}>
-                    Cancel
+                
+                <button 
+                    className='buttonContainer__cancelPostButton' 
+                    onClick={handleCancelPost} 
+                    disabled={isCancelling} 
+                >
+                    {isCancelling ? 'Cancelling...' : 'Cancel'}
                 </button>
             </div>
         </section>

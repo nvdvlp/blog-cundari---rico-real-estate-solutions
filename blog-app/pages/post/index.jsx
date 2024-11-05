@@ -227,14 +227,12 @@ function ViewPost() {
                                 />
                                 <div className='viewPost__iconsSection'>
                                     <ion-icon class='viewPost__create' name="create" onClick={() => {
-                                        localStorage.setItem('selectedPost', JSON.stringify(post));
                                         router.push('/editPost');
                                     }}></ion-icon>
                                     <ion-icon 
                                         class='viewPost__link' 
                                         name="link"
                                         onClick={() => {
-                                            localStorage.setItem('selectedPost', JSON.stringify(post));
                                             router.push(`/post/${post.post_id}`);
                                         }}
                                     ></ion-icon>
@@ -247,7 +245,7 @@ function ViewPost() {
                                     </h2>
                                     <h2 className='viewPost__postTitle truncated-text'
                                         onClick={() => {
-                                            localStorage.setItem('selectedPost', JSON.stringify(post));
+
                                             router.push(`/post/${post.post_id}`);
                                         }}>{post.post_title}</h2>
                                     <h2 className='viewPost__postContent truncated-text-2'>{post.post_desc}</h2>

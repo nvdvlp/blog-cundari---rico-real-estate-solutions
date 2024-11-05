@@ -15,7 +15,7 @@
 .loader {
     width: 48px;
     height: 48px;
-    border: 5px solid #252525;
+    border: 5px solid #003478;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -26,7 +26,7 @@
 .p{
     font-family: "Inter", sans-serif;
     margin-top: 10px;
-    color: #252525;
+    color: #003478;
     font-weight: 600;
 }
 

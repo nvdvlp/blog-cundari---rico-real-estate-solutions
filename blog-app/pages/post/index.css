@@ -83,7 +83,7 @@
     z-index: 1;
     position: relative;
     top: 0px;
-    left: -73px;
+    left: -72px;
 }
 
 .buttonIcon__searchIcon {
@@ -317,6 +317,7 @@
     background-color: #D9E6F8;
     white-space: nowrap;
     height: min-content;
+    cursor: pointer;
 }
 
 .presentation__bannerContainer{
@@ -332,8 +333,6 @@
     } 
 
     .presentation__bannerContainer{
-        display: flex;
-        flex-direction: row;
         width: 100%;
         justify-content: space-between;
     }
@@ -382,7 +381,7 @@
     }
     
     .sortInput__buttonIcon {
-        width: 90px;
+        width: 150px;
         height:46px;
         z-index: 1;
         position: relative;
