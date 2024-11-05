@@ -4,6 +4,7 @@
     font-size: 35px;
     font-weight: 600;
     margin-bottom: 30px;
+    color: #003478;
 }
 
 .login-container{
@@ -46,7 +47,7 @@
     font-size: 14px;
     font-weight: 500;
     padding-left: 15px;
-    color: #5E5E5E;
+    color: #003478;
     margin-bottom: 10px;
 }   
 
@@ -62,7 +63,7 @@
     font-size: 14px;
     color: #FFFFFF;
     font-weight: 600;
-    background-color: #212121;
+    background-color: #003478;
     border: none;
     padding: 10px 30px;
     border-radius: 4px;
