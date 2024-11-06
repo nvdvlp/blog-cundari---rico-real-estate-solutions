@@ -53,10 +53,10 @@ export default function PostPage() {
                 console.log(tagIdArray)
                 for (const tag of tagIdArray) {
                     let { data: tagName, error: tagError } = await Supabase
-                      .from('Tags')
-                      .select('tag_name')
-                      .eq('id', tag.tag_id)
-                      .single();
+                    .from('Tags')
+                    .select('tag_name')
+                    .eq('id', tag.tag_id)
+                    .single();
 
                     tagArray.push(tagName)
                 }
@@ -100,20 +100,6 @@ export default function PostPage() {
             } else {
                 console.error(result.error);
             }
-        }
-    
-        async function fetchPosts() {
-            const { data, error } = await supabase
-                .from('Posts')
-                .select('*') 
-                .order('created_at', { ascending: false }); 
-    
-            if (error) {
-                console.error('Error fetching posts:', error);
-            } else {
-                setPosts(data);
-            }
-            setLoading(false);
         }
     
         fetchDisplayName();

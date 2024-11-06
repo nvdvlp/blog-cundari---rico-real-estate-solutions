@@ -227,7 +227,7 @@ function ViewPost() {
                                 />
                                 <div className='viewPost__iconsSection'>
                                     <ion-icon class='viewPost__create' name="create" onClick={() => {
-                                        router.push('/editPost');
+                                        router.push(`/editPost/${post.post_id}`);
                                     }}></ion-icon>
                                     <ion-icon 
                                         class='viewPost__link' 

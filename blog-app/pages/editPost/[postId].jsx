@@ -1,12 +1,14 @@
 'use client';
 import './EditPost.css';
-import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';   
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; 
-import updatePost from '../lib/updatePost';
-import updateDisplayName from '@/app/lib/updateDisplayName';
+import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
+import dynamic from 'next/dynamic';
+import updatePost from '../../app/lib/updatePost';
+import updateDisplayName from '@/app/lib/updateDisplayName';
+import Supabase from '../../app/lib/supabaseClient';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -26,77 +28,60 @@ const formats = [
     'blockquote', 'list', 'bullet', 'link', 'image'
 ];
 
+const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
+);
 
-const handleImageUpload = (file) => {
-    if (file && file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const img = new Image();
-            img.src = event.target.result;
+export default function EditPost(){
+    const router = useRouter(); 
+    const pathname = usePathname();
+    const { postId } = router.query;
+    // const [postId, setPostId] = useState(null);
+    const [postDetails, setPostDetails] = useState(null);
+    const [loadingPost, setLoadingPost] = useState(true);
 
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                const maxWidth = 640;  // Tamaño máximo de ancho que deseas
-                const scaleFactor = maxWidth / img.width;
-                
-                canvas.width = maxWidth;
-                canvas.height = img.height * scaleFactor;
-
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                const resizedImage = canvas.toDataURL('image/jpeg');
-                const quillEditor = document.querySelector('.ql-editor');
-                
-                quillEditor.focus();
-                const range = quillEditor.getSelection();
-                quillEditor.insertEmbed(range.index, 'image', resizedImage);
-            };
-        };
-        reader.readAsDataURL(file);
-    } else {
-        alert('Please select a valid image.');
-    }
-};
-
-// Editar post
-export default function EditPost() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [draggedImage, setDraggedImage] = useState(null);
-    const router = useRouter(); 
     const [displayName, setDisplayName] = useState('');
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState('');
     const [allTags, setAllTags] = useState([]);
-    const [posts, setPosts] = useState([]); // Estado para almacenar todos los posts
-    const [loading, setLoading] = useState(true); 
-    const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
-    );
+    const [loadingTags, setLoadingTags] = useState(true);
     const [selectedTags, setSelectedTags] = useState([])
     const [createdAt, setCreatedAt] = useState('');
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const post = JSON.parse(localStorage.getItem('selectedPost'));
-            console.log(post)
-            if (post) {
-                setTitle(post.post_title);
-                setDescription(post.post_desc);
-                setContent(post.post_html);
-                setDraggedImage(post.post_banner_img_b64);
-                setSelectedTags(post.tags);
-                setCreatedAt(new Date(post.created_at).toLocaleDateString('en-US', {
+        console.log('postId:', postId);
+        const fecthPostDetails = async() => {
+            if(!postId) return;
+            setLoadingPost(true); 
+
+            const { data, error } = await Supabase
+            .from('Posts')
+            .select('*')
+            .eq('post_id', postId)
+            .single();
+
+            if(error){
+                console.error('error fetching the post', error);
+            }else {
+                setPostDetails(data);
+                setTitle(data.post_title);
+                setDescription(data.post_desc);
+                setContent(data.post_html);
+                setDraggedImage(data.post_banner_img_b64);
+                setSelectedTags(data.tags || []);
+                setCreatedAt(new Date(data.created_at).toLocaleDateString('en-US', {
                     day: '2-digit',
                     month: 'long',
                     year: 'numeric'
                 }));
             }
+            setLoadingPost(false);  
         }
-        
+
         async function fetchDisplayName() {
             const userId = 'a5f3ed09-60e3-4454-884c-1541fe11920a'; // UID del usuario
             const newDisplayName = 'Guillermo Rico'; // nombre del usuario
@@ -109,23 +94,9 @@ export default function EditPost() {
                 console.error(result.error);
             }
         }
-    
-        async function fetchPosts() {
-            setLoading(true);
-            const { data, error } = await supabase
-                .from('Posts')
-                .select('*') 
-                .order('created_at', { ascending: false }); 
-    
-            if (error) {
-                console.error('Error fetching posts:', error);
-            } else {
-                setPosts(data);
-            }
-        }
-
+        
         async function fetchAllTags() {
-            const { data, error } = await supabase
+            const { data, error } = await Supabase
                 .from('Tags') // Asegúrate de que esta tabla exista y contenga los tags
                 .select('*');
         
@@ -136,45 +107,26 @@ export default function EditPost() {
             }
         }
 
+        fecthPostDetails();
         fetchDisplayName();
-        fetchPosts();
         fetchAllTags();
+
     }, []);
 
+
     const handleSavePost = async () => {
-        if (!title.trim()) {
-            alert('The title post cannot be empty.');
+        if (!postId || !title.trim() || !content.trim()) {
+            alert('El título y el contenido del post no pueden estar vacíos.');
             return;
         }
-
-        if (!content.trim()) {
-            alert('The post content cannot be empty.');
-            return;
-        }
-
-        // Guardar el post si los campos están llenos
-        const currentDate = new Date().toLocaleDateString();
-        const postId = JSON.parse(localStorage.getItem('selectedPost')).post_id;
-        
         const { successMessage, error } = await updatePost(postId, {
-            post_title: title,
-            post_desc: description,
-            post_banner_img_b64: draggedImage,
-            post_html: content
+            post_title: title, post_desc: description, post_banner_img_b64: draggedImage, post_html: content
         }, selectedTags);
-
         if (error) {
-            alert(`${error.message}`);
-            console.log(error);
-        } 
-        else if (successMessage) {
-            console.log("Edited SUCCESSFULLY");
-            setTitle('');
-            setDescription('');
-            setContent('');
-            setDraggedImage(null);
-            setTags([]); // Limpiar tags
-            router.push(`/post`);
+            alert(`Error: ${error.message}`);
+        } else {
+            console.log("edited successfully");
+            router.push(`/post/${postId}`); // Redirige a la página de vista del post
         }
     };
 
@@ -212,35 +164,19 @@ export default function EditPost() {
 
     const handleDropImage = (e) => {
         e.preventDefault();
-        const file = e.dataTransfer.files[0];
-        handleFileUpload({ target: { files: [file] } });
+        handleFileUpload({ target: { files: e.dataTransfer.files } });
     };
 
     const handleAddTag = async () => {
         const trimmedTag = newTag.trim();
         if (!trimmedTag || tags.includes(trimmedTag)) return;
-
-        // Añadir a Supabase si no existe
-        const { data, error } = await Supabase
-            .from('Tags')
-            .insert([{ tag_name: trimmedTag }])
-            .select();
     
-        if (error) {
-            console.error('Error adding tag:', error);
-        } else {
-            setTags([...tags, trimmedTag]);
-            setSelectedTags([...selectedTags, trimmedTag]);
+        const { data, error } = await Supabase.from('Tags').insert([{ tag_name: trimmedTag }]);
+        if (!error) {
+            setSelectedTags([...selectedTags, trimmedTag]); 
         }
         setNewTag('');
-        
-        // if(trimmedTag.trim() && !tags.includes(trimmedTag)){
-        //     setTags([...tags, trimmedTag]);
-        //     setSelectedTags([...selectedTags, trimmedTag]);
-        // }else if (!selectedTags.includes(trimmedTag)){
-        //     setSelectedTags([...selectedTags, trimmedTag])
-        // }
-    }
+    };
 
     const handleRemoveTag = (index) => { 
         setSelectedTags(selectedTags.filter((_, i) => i !== index));
@@ -251,6 +187,7 @@ export default function EditPost() {
             setSelectedTags([...selectedTags, tag]);
         }
     }
+
 
     return (
         <section className='createPost'>
