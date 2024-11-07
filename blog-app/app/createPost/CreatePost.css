@@ -251,7 +251,6 @@ input {
 .tagsContainer__tag {
     background-color: #F7F7F7;
     border: 1px solid #77A3DC;
-    width: auto;
     height: 39px;
     border-radius: 8px;
     display: flex;
@@ -515,7 +514,6 @@ input {
     .tagsContainer__tag {
         background-color: #F7F7F7;
         border: 1px solid #77A3DC;
-        width: auto;
         height: 39px;
         border-radius: 8px;
         display: flex;
@@ -709,13 +707,12 @@ input {
     .tagsContainer__tag {
         background-color: #F7F7F7;
         border: 1px solid #77A3DC;
-        width: 50px;
         height: 39px;
         border-radius: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 13px;
+        font-size: 9px;
         font-weight: 500;
         color: #636363;
         font-family: "Roboto", sans-serif;
@@ -898,13 +895,12 @@ input {
     .tagsContainer__tag {
         background-color: #F7F7F7;
         border: 1px solid #77A3DC;
-        width: 50px;
         height: 39px;
         border-radius: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 10px;
+        font-size: 8px;
         font-weight: 500;
         color: #636363;
         font-family: "Roboto", sans-serif;

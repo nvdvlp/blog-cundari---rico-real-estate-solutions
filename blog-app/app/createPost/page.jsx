@@ -7,19 +7,13 @@ import createPost from '@/app/lib/createPost.js';
 import Supabase from '../lib/supabaseClient';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
+import { createClient } from '@supabase/supabase-js';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-//quill fonts
-const fontOptions = [
-    { label: 'Roboto', value: 'roboto' },
-    { label: 'Open Sans', value: 'open-sans' },
-    { label: 'Arial', value: 'arial' },
-    { label: 'Verdana', value: 'verdana' },
-];
-//quill modules
+
 const modules = {
     toolbar: [
-        [{ 'header': '1' }, { 'header': '2' }, { 'font': fontOptions.map(font => font.value) }],
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
         [{ size: [] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
@@ -27,21 +21,15 @@ const modules = {
         ['clean']
     ],
 };
-//quill formats
+
 const formats = [
-    'header',
-    'font',
-    'size',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'link',
-    'image'
+    'header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 
+    'blockquote', 'list', 'bullet', 'link', 'image'
 ];
+
+const supabase = createClient('https://ppxclfscuebswbjhjtcz.supabase.co', 
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBweGNsZnNjdWVic3diamhqdGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg3OTU5MjgsImV4cCI6MjA0NDM3MTkyOH0.WYUHZcJNDf1J9k1VNMpjKP_woxKS5CmHMoDFUPh2GI0'
+);
 
 // Agregar post
 export default function CreatePost() {
@@ -311,7 +299,7 @@ export default function CreatePost() {
             </div>
             
             <div className='createPost__tagContainer'>
-                <div class='tagContainer__inputFields'>
+                <div className='tagContainer__inputFields'>
                     {/* Creacion de tags */}
                     <div className='inputFields__addTagInput'>
                         <input 
@@ -366,7 +354,7 @@ export default function CreatePost() {
             </div>     
 
             <ReactQuill 
-                class='quill' 
+                className='react-quill' 
                 value={content}
                 onChange={setContent}
                 modules={modules}

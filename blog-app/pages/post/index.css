@@ -326,11 +326,26 @@
     width: 548px;
 }
 
+.active-tag {
+    background-color: #0070f3;
+    color: white;
+    font-weight: bold;
+}
 
-@media (min-width: 320px) and (max-width: 932px) {
+
+@media (min-width: 320px) and (max-width: 425px) {
     .viewPost{
-        padding-inline: 22px;
+        padding: 0px;
+        padding-inline: 20px;
     } 
+
+    .viewPost__sort{
+        max-width: 320px;
+    }
+    
+    .sort__presentation{
+
+    }
 
     .presentation__bannerContainer{
         width: 100%;
@@ -340,10 +355,9 @@
     .usedTags__tagContainer{
         display: flex;
         gap: 15px;
-        height: 40px;
-        flex-wrap: nowrap;
-        overflow-y: hidden;
-        overflow-x: auto;
+        height: 108px;
+        flex-wrap: wrap;
+        overflow-y: scroll;
     }  
 
     .viewPost__sort {
@@ -361,18 +375,18 @@
     }
     
     .presentation__tinyText {
-        font-size:15px;
-        margin-bottom:13px;
+        font-size:13px;
+        margin-bottom: 4px;
     }
 
     .presentation__bigText {
-        font-size: 29px;
+        font-size: 22px;
         margin-bottom: 11px;
     }
     
     .sortInput__input {
-        width:463px;
-        height:46px;
+        min-width:210px;
+        height:43px;
         font-size: 13px;
     }
     
@@ -381,12 +395,12 @@
     }
     
     .sortInput__buttonIcon {
-        width: 150px;
-        height:46px;
+        min-width: 40px;
+        height:43px;
         z-index: 1;
         position: relative;
         top: 0px;
-        left: -35px;
+        left: -40px;
     }
     
     .buttonIcon__searchIcon {
@@ -447,34 +461,173 @@
     }
 
     .truncated-text {
-        display: -webkit-box;        /* Required for webkit browsers */
-        -webkit-line-clamp: 2;       /* Limit to 2 lines */
-        -webkit-box-orient: vertical; /* Required for webkit browsers */
-        overflow: hidden;            /* Hide overflowing text */
-        text-overflow: ellipsis;     /* Add ellipsis (...) */
-        max-width: calc(320px - 44px);            /* Set the desired max width */
-        white-space: normal;         /* Allow wrapping to the next line */
+        display: -webkit-box;        
+        -webkit-line-clamp: 2;       
+        -webkit-box-orient: vertical;
+        overflow: hidden;           
+        text-overflow: ellipsis;     
+        max-width: calc(320px - 44px);            
+        white-space: normal;        
     }
 
     .truncated-text-2 {
-        display: -webkit-box;        /* Required for webkit browsers */
-        -webkit-line-clamp: 3;       /* Limit to 2 lines */
-        -webkit-box-orient: vertical; /* Required for webkit browsers */
-        overflow: hidden;            /* Hide overflowing text */
-        text-overflow: ellipsis;     /* Add ellipsis (...) */
-        max-width: calc(320px - 44px);            /* Set the desired max width */
-        white-space: normal;         /* Allow wrapping to the next line */
+        display: -webkit-box;       
+        -webkit-line-clamp: 3;       
+        -webkit-box-orient: vertical; 
+        overflow: hidden;            
+        text-overflow: ellipsis;     
+        max-width: calc(320px - 44px);            
+        white-space: normal;         
     }
 }
 
-@media (min-width: 768px ) and (max-width: 1440px) {
-    .viewPost{
-        padding-inline: 62px;
-    }   
-}
 
-.active-tag {
-    background-color: #0070f3;
-    color: white;
-    font-weight: bold;
+@media (min-width: 425px) and (max-width: 768px) {
+    .viewPost{
+        padding: 0px;
+        padding-left: 20px;
+        padding-inline: 20px;
+    } 
+
+    .viewPost__sort{
+        max-width: 425px;
+    }
+    
+    .sort__presentation{
+
+    }
+
+    .presentation__bannerContainer{
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .usedTags__tagContainer{
+        display: flex;
+        gap: 15px;
+        width: 450px;
+        height: 108px;
+        flex-wrap: wrap;
+        overflow-y: scroll;
+    }  
+
+    .viewPost__sort {
+        flex-direction: column;
+    }
+    
+    .sort__presentation {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+
+    .presentation__sortInput{
+        width: 50%;
+        margin-right: -35px;
+    }
+    
+    .presentation__tinyText {
+        font-size:16px;
+        margin-bottom: 4px;
+    }
+
+    .presentation__bigText {
+        font-size: 29px;
+        margin-bottom: 11px;
+    }
+    
+    .sortInput__input {
+        min-width: 319px;
+        height:43px;
+        font-size: 13px;
+    }
+    
+    .sortInput__input::placeholder {
+        font-size: 13px;
+    }
+    
+    .sortInput__buttonIcon {
+        min-width: 40px;
+        height:43px;
+        z-index: 1;
+        position: relative;
+        top: 0px;
+        left: -40px;
+    }
+    
+    .buttonIcon__searchIcon {
+        font-size: 25px;
+    }
+    
+    .sort__tags{
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .tags__usedTags {
+        font-size: 18px;
+    }
+
+    .viewPost__post{
+        min-width: calc(320px - 44px) !important;
+        max-width: calc(320px - 44px) !important;
+        flex-direction: column;
+        overflow: hidden;
+        max-height: 378px;
+        height: fit-content;
+    }
+
+    .viewPost__imgPost{
+        min-width: calc(320px - 44px) !important;
+        max-width: calc(320px - 44px) !important;
+    }
+
+    .viewPost__postContainer{
+        grid-template-columns: repeat(auto-fit, minmax(276px, 1fr));
+        row-gap: 40px;
+        justify-items: center;
+    }
+
+    .viewPost__textContainer{
+        padding: 0;
+        border-bottom: 1px solid #CCCCCC;
+        border-inline: 1px solid #CCCCCC;
+        padding-inline: 10px;
+        padding-block: 5px; 
+    }
+
+    .viewPost__title{
+        font-size: 28px;
+    }
+
+    .viewPost__postTitle{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 20px;
+        line-height: 20px;
+        display: inline-block; 
+    }
+
+    .viewPost__postContent{
+        font-size: 12px;
+    }
+
+    .truncated-text {
+        display: -webkit-box;        
+        -webkit-line-clamp: 2;       
+        -webkit-box-orient: vertical;
+        overflow: hidden;           
+        text-overflow: ellipsis;     
+        max-width: calc(320px - 44px);            
+        white-space: normal;        
+    }
+
+    .truncated-text-2 {
+        display: -webkit-box;       
+        -webkit-line-clamp: 3;       
+        -webkit-box-orient: vertical; 
+        overflow: hidden;            
+        text-overflow: ellipsis;     
+        max-width: calc(320px - 44px);            
+        white-space: normal;         
+    }
 }
