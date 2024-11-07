@@ -99,12 +99,6 @@ export default function CreatePost() {
         setIsSaving(true);
 
         //el post solo atmite 20 caracteres en el titulo
-        if (title.trim().length < 20) {
-            alert('The title must contain at least 20 characters.');
-            setIsSaving(false);
-            return;
-        }
-
         //el post tiene que contener imagen
         if (!draggedImage) {
             alert('Please upload an image before saving the post.');
