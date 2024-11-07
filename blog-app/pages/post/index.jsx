@@ -22,6 +22,7 @@ function ViewPost() {
     const [tags, setTags] = useState([]);
     const [allTags, setAllTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]); 
+    const [isNavigating, setIsNavigating] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('authID');
@@ -156,6 +157,21 @@ function ViewPost() {
     if (loading) {
         return <Loader />;
     }
+
+    function handleNavigateToPost(postId) {
+        setIsNavigating(true); // Muestra el loader
+        router.push(`/post/${postId}`);
+    }
+    
+    function handleNavigateToEditPost(postId) {
+        setIsNavigating(true); // Muestra el loader
+        router.push(`/editPost/${postId}`);
+    }
+    
+    function handleNavigateToCreatePost() {
+        setIsNavigating(true); // Muestra el loader
+        router.push(`/createPost`);
+    }
     
     return (   
         <> 
@@ -207,7 +223,7 @@ function ViewPost() {
 
                 <div className='viewPost__sectionTitle'>
                     <h2 className='viewPost__title'>Your Posts</h2>
-                    <button onClick={() => router.push(`/createPost`)} className='viewPost__newPost'>New Post</button>
+                    <button onClick={() => handleNavigateToCreatePost()} className='viewPost__newPost'>New Post</button>
                 </div>
 
                 <div className='viewPost__postContainer'>
@@ -226,15 +242,11 @@ function ViewPost() {
                                     alt={post.post_title}
                                 />
                                 <div className='viewPost__iconsSection'>
-                                    <ion-icon class='viewPost__create' name="create" onClick={() => {
-                                        router.push(`/editPost/${post.post_id}`);
-                                    }}></ion-icon>
+                                    <ion-icon class='viewPost__create' name="create" onClick={() => handleNavigateToEditPost(post.post_id)}></ion-icon>
                                     <ion-icon 
                                         class='viewPost__link' 
                                         name="link"
-                                        onClick={() => {
-                                            router.push(`/post/${post.post_id}`);
-                                        }}
+                                        onClick={() => handleNavigateToPost(post.post_id)}
                                     ></ion-icon>
                                     <ion-icon name="trash" class='viewPost__trash' onClick={() => deletePostHandler(post.post_id)}></ion-icon>
                                 </div>
