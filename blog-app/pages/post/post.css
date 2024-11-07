@@ -110,7 +110,7 @@
     height: min-content;
 }
 
-.usedTags__tagContainer{
+.usedTags__tagContainerPost{
     display: flex;
     gap: 15px;
     height: 60px;
@@ -265,6 +265,14 @@
     .post__infoPost {
         width:295px;
         font-size:10px;
+    }
+
+    .usedTags__tagContainer{
+        display: flex;
+        gap: 15px;
+        height: 120px;
+        overflow-x: scroll;
+        margin-top: 15px;
     }
 }
 

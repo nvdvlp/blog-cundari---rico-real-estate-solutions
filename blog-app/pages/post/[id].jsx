@@ -137,7 +137,7 @@ export default function PostPage() {
             <div className='post__titleSection'>
                 <h1 className='titleSection__postTitle'>{postDetails.post_title}</h1>
                 <p className='titleSection__postDesc'>{postDetails.post_desc}</p>
-                <div className='usedTags__tagContainer'>
+                <div className='usedTags__tagContainerPost'>
                             {selectedTags.length > 0 ? (
                                 selectedTags.map((tag, index) => (
                                     <div
