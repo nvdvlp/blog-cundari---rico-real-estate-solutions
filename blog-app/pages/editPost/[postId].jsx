@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import updatePost from '../../app/lib/updatePost';
 import updateDisplayName from '@/app/lib/updateDisplayName';
 import Supabase from '../../app/lib/supabaseClient';
+import Loader from '../../app/components/loader';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -51,6 +52,7 @@ export default function EditPost(){
     const [loadingTags, setLoadingTags] = useState(true);
     const [selectedTags, setSelectedTags] = useState([])
     const [createdAt, setCreatedAt] = useState('');
+    const [isSaving, setIsSaving] = useState(false); 
 
     useEffect(() => {
         console.log('postId:', postId);
@@ -119,9 +121,11 @@ export default function EditPost(){
             alert('El título y el contenido del post no pueden estar vacíos.');
             return;
         }
+        setIsSaving(true);
         const { successMessage, error } = await updatePost(postId, {
             post_title: title, post_desc: description, post_banner_img_b64: draggedImage, post_html: content
         }, selectedTags);
+        setIsSaving(false);
         if (error) {
             alert(`Error: ${error.message}`);
         } else {
@@ -186,6 +190,10 @@ export default function EditPost(){
         if(!selectedTags.includes(tag)){
             setSelectedTags([...selectedTags, tag]);
         }
+    }
+
+    if (isSaving) {
+        return <Loader />;
     }
 
 
