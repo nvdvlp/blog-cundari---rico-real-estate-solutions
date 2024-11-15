@@ -72,18 +72,26 @@ function ViewPost() {
                 return;
             }
 
+            // const timeoutPromise = new Promise((_, reject) =>
+            //     setTimeout(() => reject(new Error('Request timed out')), 10000) // Timeout de 10 segundos
+            // );
+
             const { data, error } = await Supabase
                 .from('Posts')
                 .select(`
-                    *,
+                    post_id,
+                    post_title,
+                    post_desc, 
+                    post_banner_img_b64,
+                    created_at,
                     Post_tags (
                         tag_id,
                         Tags (
                             tag_name
                         )
                     )
-                `)
-                .eq('user_uuid', user.id); // Filtra posts por user_uuid
+                    `)
+                    .eq('user_uuid', user.id); // Filtra posts por user_uuid
 
                 if (error) {
                     console.error('Error fetching posts:', error);

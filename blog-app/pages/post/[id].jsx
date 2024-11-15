@@ -31,15 +31,22 @@ export default function PostPage() {
             
             const { data, error } = await Supabase
             .from('Posts') 
-            .select('*')
+            .select(`
+                    post_title,
+                    post_desc, 
+                    post_banner_img_b64,
+                    created_at,
+                    post_html
+                    `)
             .eq('post_id', id) 
-            .single(); 
+            .single()
+
+            console.log(postDetails)
 
             const { data: tagIdArray, error: currentTagsError } = await Supabase
             .from('Post_tags')
             .select('tag_id')
             .eq('post_id', id);
-
 
             if (currentTagsError) {
                 console.error('Error fetching post:', error);
@@ -58,7 +65,7 @@ export default function PostPage() {
                     .eq('id', tag.tag_id)
                     .single();
 
-                    tagArray.push(tagName)
+                    tagArray.push(tagName);
                 }
                 console.log(tagArray)
                 setSelectedTags(tagArray)
